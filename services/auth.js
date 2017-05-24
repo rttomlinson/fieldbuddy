@@ -1,7 +1,6 @@
 //try to auth by bearer
 //try to auth by username as password
 module.exports = (User, passport, app, sequelize) => {
-
     //start passport service and session
     app.use(passport.initialize());
 
@@ -35,7 +34,7 @@ module.exports = (User, passport, app, sequelize) => {
     // ----------------------------------------
     // Login Handler
     // ----------------------------------------
-    app.post('auth/login', newSessionStrat, (req, res, next) => {
+    app.post('/auth/login', newSessionStrat, (req, res, next) => {
         res.json(req.user);
     });
 

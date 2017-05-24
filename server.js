@@ -40,6 +40,13 @@ app.use(function(req, res, next) {
     next();
 });
 
+//----------------------
+//Logger
+//------------------------
+app.use(require('morgan')('dev'));
+
+
+
 // ----------------------------------------
 // Services
 // ----------------------------------------
@@ -51,19 +58,24 @@ wagner.invoke(require('./services/auth'), {
 //Routers
 //----------------------------
 
-//app.use('/api/user/', wagner.invoke(require("./routes/users")));
-
+//app.use('/api', wagner.invoke(require("./routes/api")));
 
 
 app.get('/', (req, res, next) => {
     res.end("Yay server running!");
 });
 
+
+let port = process.env.PORT || 8080;
+if (process.env.PORT !== 'production') {
+    port = 8081;
+}
+
 // If we're running this file directly
 // start up the server
 if (require.main === module) {
-    app.listen(process.env.PORT || 8080, () => {
-    console.log("listening on port", process.env.PORT);
+    app.listen(port, () => {
+    console.log("listening on port:", port);
     });
 }
 
