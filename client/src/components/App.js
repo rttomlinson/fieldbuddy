@@ -1,46 +1,59 @@
-import React, { Component } from 'react';
-import 'isomorphic-fetch';
-import serialize from 'form-serialize';
+import React, {
+    Component
+}
+from 'react';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect
+}
+from 'react-router-dom';
+import DashboardContainer from '../containers/DashboardContainer';
+import LoginForm from './LoginForm';
+import RequireAuthContainer from '../containers/RequireAuthContainer';
+import Navbar from './Navbar';
+import { authorizeUser } from '../actions/authActions';
+import {connect} from 'react-redux';
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        Please log in
-        <form onSubmit={(e) => {
-            console.log("form submitted!");
-            e.preventDefault();
-            //get form data
-            const form = serialize(e.target, {hash: true});
-            const myHeaders = new Headers({
-                'Content-Type': 'application/json'
-            });
-            
-            const _options = {
-                headers: myHeaders,
-                method: 'post',
-                body: JSON.stringify(form)
-            }
-            fetch('/auth/login', _options)
-            .then((response) => {
-                if(!response.ok) {
-                    throw response;
-                }
-                return response.json();
-            })
-            .then((json) => {
-                console.log("json", json);
-            })
-            .catch((err) => {
-                console.log("dispatch auth error", err.status, err.statusText);
-            });
-        }}>
-            <input type="text" name="email"/>
-            <input type="text" name="password"/>
-            <button type="submit">login</button>
-        </form>
-      </div>
-    );
-  }
+    
+    constructor(props){
+        super(props);
+        
+        if(localStorage.getItem('token')) {
+            this.props.authorizeUser();
+        }
+
+    }
+    render() {
+        return (
+                <Router>
+                    <div>
+                        <Navbar />
+                        <Switch>
+                            <Route path="/login" component={LoginForm} />
+                            <Redirect exact from="/" to="/dashboard"/>
+                            <RequireAuthContainer>
+                                <Route path="/dashboard" component={DashboardContainer}/>
+                            </RequireAuthContainer>
+                            <Route render={() => {
+                                    return (<div>Page not found</div>);
+                            }} />
+                        </Switch>
+                    </div>
+                </Router>
+        );
+    }
 }
 
-export default App;
+function mapDispatchToProps(dispatch){
+    return {
+        authorizeUser: () => {
+            dispatch(authorizeUser());
+        }
+    };
+}
+
+
+export default connect(null, mapDispatchToProps)(App);
