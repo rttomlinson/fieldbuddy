@@ -58,7 +58,7 @@ wagner.invoke(require('./services/auth'), {
 //Routers
 //----------------------------
 
-//app.use('/api', wagner.invoke(require("./routes/api")));
+app.use('/api', wagner.invoke(require("./routes/api")));
 
 
 app.get('/', (req, res, next) => {

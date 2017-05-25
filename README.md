@@ -18,6 +18,14 @@ Board
     can have multiple lists
     belong to multiple users
 
+
+Boardmember 
+
+
+
+
+
+
 List
     can have multiple cards
     belong to a single board

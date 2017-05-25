@@ -14,16 +14,27 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return User.create({
-      email: "admin@admin.com",
-      hashedPassword: "admin",
-      username: "admin"
-    });
-    // return queryInterface.bulkInsert("Users", [{
+    let users = [];
+    for (let i = 1; i <= 10; i++){
+        let user = User.create({
+            email: `admin${i}@admin.com`,
+            hashedPassword: "admin",
+            username: `admin${i}`
+        });
+        users.push(user);
+    }
+    return Promise.all(users);
+    // return User.create({
     //   email: "admin@admin.com",
     //   hashedPassword: "admin",
-    //   token: ""
-    // }], {});
+    //   username: "admin"
+    // });
+    
+    
+    
+    
+    
+    //return queryInterface.bulkInsert("Users", users, {});
 
   },
 

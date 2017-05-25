@@ -12,12 +12,18 @@
     "passport-local": "^1.0.0",
     "pg": "^6.2.2",
     "pg-hstore": "^2.3.2",
+    "react": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "sequelize": "^3.30.4",
     "shortid": "^2.2.8",
     "underscore": "^1.8.3",
     "wagner-core": "^0.2.0"
   },
   "devDependencies": {
+    "faker": "^4.1.0",
     "morgan": "^1.8.1",
     "nodemon": "^1.11.0"
   },
@@ -26,7 +32,7 @@
     "nodemon": "./node_modules/nodemon/bin/nodemon.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sql": "./node_modules/sequelize-cli/bin/sequelize",
+    "sql": "node ./node_modules/sequelize-cli/bin/sequelize",
     "sql:migrate:undo": "npm run sql db:migrate:undo:all",
     "sql:migrate": "npm run sql db:migrate",
     "sql:seed:undo": "npm run sql db:seed:undo:all",

@@ -11,6 +11,29 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 // associations can be defined here
+                User.hasMany(models.Board, {
+                    foreignKey: "owner_id"
+                });
+                User.hasMany(models.Boardmember, {
+                    foreignKey: "member_id"
+                });
+
+                User.belongsToMany(models.Board, {
+                    through: models.Boardmember,
+                    as: 'BoardMember',
+                    foreignKey: 'member_id'
+                });
+            },
+            findByToken: function(token) {
+                return User.findOne({
+                        token
+                    })
+                    .then((user) => {
+                        return user;
+                    })
+                    .catch((err) => {
+                        return err;
+                    });
             }
         },
         instanceMethods: {
