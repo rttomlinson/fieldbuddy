@@ -3,8 +3,7 @@ import { AUTH_USER, AUTH_REQUEST, UNAUTH_USER } from '../actions/authActions';
 const INITIAL_STATE = {
     isAuth: false,
     error: null,
-    isFetching: false,
-    token: null
+    isFetching: false
 };
 
 export default function authReducer(state = INITIAL_STATE, action){
@@ -24,8 +23,7 @@ export default function authReducer(state = INITIAL_STATE, action){
         case UNAUTH_USER:
             return {
                 ...state,
-                isAuth: false,
-                token: null
+                isAuth: false
             };
         default:
             return state;

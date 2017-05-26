@@ -3,16 +3,11 @@ import React, {
 }
 from 'react';
 import 'isomorphic-fetch';
-import serialize from 'form-serialize';
 import {
     connect
 }
 from 'react-redux';
-import {
-    requestBoardCreation
-}
-from '../actions/submitNewBoardsActions';
-import fetchBoards from '../actions/boardsActions';
+import {fetchBoards} from '../actions/boardsActions';
 import Board from '../components/Board';
 import {
     CardDeck,
@@ -24,7 +19,7 @@ from 'reactstrap';
 const makeBoards = (boards) => {
     return boards.map((board) => {
         return (
-            <Board title={board.name} updatedAt={board.updatedAt}/>
+            <Board key={board.id} title={board.name} updatedAt={board.updatedAt}/>
         );
     });
 
@@ -38,7 +33,11 @@ class DashboardContainer extends Component {
         //fetch initial data
         this.props.fetchBoards();
     }
+    
+    
     render() {
+        const {boards} = this.props;
+        console.log("expect boards to be updated", boards);
         return (
             <div className="container">
                 <Row>
@@ -59,14 +58,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        requestBoardCreation: (e) => {
-            console.log("form submitted for board creation!");
-            e.preventDefault();
-            let form = serialize(e.target, {
-                hash: true
-            });
-            dispatch(requestBoardCreation(form));
-        },
         fetchBoards: () => {
             dispatch(fetchBoards());
         }

@@ -30,13 +30,14 @@ class FormWrapper extends Component {
         const {
             inputFields,
             id,
-            onSubmit
+            onSubmit,
+            onClick
         } = this.props;
         return (
             <div id={id}>
                 <Form onSubmit={onSubmit}>
                     {makeInputGroup(inputFields)}
-                <Button type="submit" color="primary" onClick={this.props.modalToggle}>Add board</Button>{' '}
+                <Button type="submit" color="primary" onClick={onClick}>Add board</Button>{' '}
                 </Form>
             </div>
         );

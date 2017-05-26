@@ -1,32 +1,34 @@
-import { REQUEST_BOARDS, REQUEST_BOARDS_SUCCESS, ADD_ONE_BOARD } from '../actions/boardsActions';
+import { REQUEST_BOARDS_FAILURE, REQUEST_BOARDS_SUCCESS, BOARD_CREATION_SUCCESS, BOARD_CREATION_FAILURE } from '../actions/boardsActions';
 
 const INITIAL_STATE = {
     error: null,
-    isFetching: false,
     data: []
 };
 
 export default function boardsReducer(state = INITIAL_STATE, action){
     switch(action.type){
-        case REQUEST_BOARDS:
-            return {
-                ...state,
-                error: null,
-                isFetching: true
-            };
         case REQUEST_BOARDS_SUCCESS:
             return {
                 ...state,
-                isFetching: false,
                 data: action.data
             };
-        case ADD_ONE_BOARD:
+        case REQUEST_BOARDS_FAILURE:
+            return {
+                ...state,
+                error: action.error
+            };
+        case BOARD_CREATION_SUCCESS:
             return {
                 ...state,
                 data: [
                     ...state.data,
                     action.data
                 ]
+            };
+        case BOARD_CREATION_FAILURE:
+            return {
+                ...state,
+                error: action.error
             };
         default:
             return state;

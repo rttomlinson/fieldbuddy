@@ -7,14 +7,11 @@ import {
     ModalFooter
 }
 from 'reactstrap';
-import FormWrapper from './FormWrapper';
+import FormWrapper from './elements/FormWrapper';
 import {
     requestBoardCreation
 }
-from '../actions/submitNewBoardsActions';
-import {
-    addOneBoard
-} from '../actions/boardsActions';
+from '../actions/boardsActions';
 import serialize from 'form-serialize';
 import {
     connect
@@ -54,7 +51,7 @@ class NewBoardForm extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Add new board</ModalHeader>
           <ModalBody>
-            <FormWrapper onSubmit={requestBoardCreation} id="new-board" inputFields={inputFields} modalToggle={this.toggle}/>
+            <FormWrapper onSubmit={requestBoardCreation} id="new-board" inputFields={inputFields} onClick={this.toggle}/>
           </ModalBody>
         </Modal>
       </div>
@@ -73,10 +70,7 @@ function mapDispatchToProps(dispatch) {
             });
             console.log("form submitted", form);
 
-            dispatch(requestBoardCreation(form))
-            .then(newBoard => {
-                dispatch(addOneBoard(newBoard));
-            });
+            dispatch(requestBoardCreation(form));
         }
     };
 }

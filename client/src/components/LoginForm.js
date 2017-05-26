@@ -36,11 +36,6 @@ class LoginForm extends Component{
     }
 }
 
-
-
-function mapStateToProps(state){
-    return state;
-}
 function mapDispatchToProps(dispatch, ownProps){
     return {
         requestUserAuthorization: (e) => {
@@ -58,4 +53,4 @@ function mapDispatchToProps(dispatch, ownProps){
     };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
+export default withRouter(connect(null, mapDispatchToProps)(LoginForm));

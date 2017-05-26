@@ -1,15 +1,54 @@
-export const REQUEST_BOARDS = "REQUEST_BOARDS";
 export const REQUEST_BOARDS_SUCCESS = "REQUEST_BOARDS_SUCCESS";
 export const REQUEST_BOARDS_FAILURE = "REQUEST_BOARDS_FAILURE";
 
-export const ADD_ONE_BOARD = "ADD_ONE_BOARD";
+export const BOARD_CREATION_SUCCESS = "BOARD_CREATION_SUCCESS";
+export const BOARD_CREATION_FAILURE = "BOARD_CREATION_FAILURE";
 
-export function addOneBoard(data) {
+export function boardCreationSuccess(data) {
     return {
-        type: ADD_ONE_BOARD,
+        type: BOARD_CREATION_SUCCESS,
         data
     };
 }
+export function boardCreationFailure(error) {
+    return {
+        type: BOARD_CREATION_FAILURE,
+        error
+    };
+}
+
+export function requestBoardCreation(form) {
+    return (dispatch) => {
+
+        const token = localStorage.getItem("token");
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        const _options = {
+            headers: myHeaders,
+            method: 'post',
+            body: JSON.stringify(form)
+        }
+        return fetch(`/api/boards/new?token=${token}`, _options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log("json", json);
+                dispatch(boardCreationSuccess(json));
+            })
+            .catch((err) => {
+                console.log("dispatch auth error", err, err.status, err.statusText);
+                dispatch(boardCreationFailure(err));
+            });
+
+    };
+}
+
 
 export function requestBoardsSuccess(data) {
     return {
@@ -17,7 +56,6 @@ export function requestBoardsSuccess(data) {
         data
     };
 }
-
 export function requestBoardsFailure(error) {
     return {
         type: REQUEST_BOARDS_FAILURE,
@@ -25,63 +63,26 @@ export function requestBoardsFailure(error) {
     };
 }
 
-export function requestBoards() {
-    return {
-        type: REQUEST_BOARDS
+
+export function fetchBoards() {
+    return (dispatch) => {
+        const token = localStorage.getItem("token");
+
+        return fetch(`/api/boards?token=${token}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log("should call request boards success", json);
+                dispatch(requestBoardsSuccess(json));
+                //dispatch to update the state with new board
+            })
+            .catch((err) => {
+                console.log("dispatch auth error", err.status, err.statusText);
+                dispatch(requestBoardsFailure(err));
+            });
     };
 }
-
-
-export function boardsFetchCall(onSuccess, onFailure, typeOfPromise, ...args) {
-    // console.log("typeof native promise", Promise.reject);
-    // console.log("typeof passed promise", typeOfPromise);
-    // console.log("are they equal?", Promise.reject === typeOfPromise);
-
-    //Cannot call promise directly from variable
-    //But able to assign it then call
-    //This returns error: TypeError: function resolve() { [native code] } called on non-object
-    //at reject (native)
-    //Promise.reject = typeOfPromise;
-    // return Promise.resolve(...args)
-    return typeOfPromise(...args)
-        .then((response) => {
-            if (!response.ok) {
-                throw response;
-            }
-            return response.json();
-        })
-        .then((json) => {
-            console.log("json", json);
-            onSuccess(json);
-            //dispatch to update the state with new board
-        })
-        .catch((err) => {
-            console.log("dispatch auth error", err, err.status, err.statusText);
-            onFailure(err);
-        });
-}
-
-
-
-export function fetchBoardsCreator(fnFetch, fnSuccess, fnError, fnPromiseCreator, typeOfPromise) {
-    return () => {
-        return (dispatch) => {
-            //call fnFetch to kick it off
-            dispatch(fnFetch());
-            let newfnSuccess = (data) => {
-                dispatch(fnSuccess(data));
-            };
-            let newfnError = (error) => {
-                dispatch(fnError(error));
-            };
-            const apiEndpoint = '/api/boards/';
-            const token = localStorage.getItem('token');
-            const apiWithToken = `${apiEndpoint}?token=${token}`;
-            return fnPromiseCreator(newfnSuccess, newfnError, typeOfPromise, apiWithToken);
-        };
-    };
-}
-
-const fetchBoards = fetchBoardsCreator(requestBoards, requestBoardsSuccess, requestBoardsFailure, boardsFetchCall, fetch);
-
-export default fetchBoards;
