@@ -18,7 +18,7 @@ module.exports = {
         let card = {
             list_id: Math.floor(Math.random() * 50 + 1),
             title: faker.company.companyName(),
-            description: faker.company.companyName(),
+            description: faker.lorem.paragraph(),
             completed: false
         };
         cards.push(card);

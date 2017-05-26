@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 };
 
 export default function boardsReducer(state = INITIAL_STATE, action){
+    let board, boardIndex, boardList;
     switch(action.type){
         case REQUEST_BOARDS_SUCCESS:
             return {
@@ -31,13 +32,13 @@ export default function boardsReducer(state = INITIAL_STATE, action){
                 error: action.error
             };
         case LIST_CREATION_SUCCESS:
-            let boardIndex = state.data.findIndex((board) => {
+            boardIndex = state.data.findIndex((board) => {
                 return board.id == action.data.board_id;
             });
-            let board = {
+            board = {
                 ...state.data[boardIndex]
             };
-            let boardList = [
+            boardList = [
                 ...board.Lists,
                 action.data
             ];
@@ -60,30 +61,44 @@ export default function boardsReducer(state = INITIAL_STATE, action){
             };
         case CARD_CREATION_SUCCESS:
             console.log("successful card creation");
-            // let boardIndex = state.data.findIndex((board) => {
-            //     return board.id == action.data.board_id;
-            // });
-            // let board = {
-            //     ...state.data[boardIndex]
-            // };
-            // let boardList = [
-            //     ...board.Lists,
-            //     action.data
-            // ];
-            // board = {
-            //     ...board,
-            //     Lists: boardList
-            // };
-            // return {
-            //     ...state,
-            //     data: [
-            //         ...state.data.slice(0, boardIndex),
-            //         board,
-            //         ...state.data.slice(boardIndex + 1)
-            //     ]
-            // };
+            let listWithCardIndex;
+            boardIndex = state.data.findIndex((board) => {
+                listWithCardIndex = board.Lists.findIndex((list) => {
+                    return list.id == action.data.list_id;
+                });
+                return listWithCardIndex > -1;
+            });
+            console.log("boardIndex", boardIndex);
+            console.log("Index of list within board", listWithCardIndex);
+            board = {
+                ...state.data[boardIndex]
+            };
+            boardList = {
+                ...board.Lists[listWithCardIndex]
+            };
+            let listCards = [
+                ...boardList.Cards,
+                action.data
+            ];
+            boardList = {
+                ...boardList,
+                Cards: listCards
+            };
+            board = {
+                ...board,
+                Lists: [
+                    ...board.Lists.slice(0, listWithCardIndex),
+                    boardList,
+                    ...board.Lists.slice(listWithCardIndex + 1)
+                ]
+            };
             return {
-                ...state
+                ...state,
+                data: [
+                    ...state.data.slice(0, boardIndex),
+                    board,
+                    ...state.data.slice(boardIndex + 1)
+                ]
             };
         case CARD_CREATION_FAILURE:
             console.log("card creation failure");

@@ -150,6 +150,7 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
 
         const cardName = req.body.cardName;
         const listId = req.body.listId;
+        const description = req.body.cardDescription;
         console.log('cardName', cardName);
         console.log("listId", listId);
         //expect to get user info from req.user
@@ -157,10 +158,11 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
         sequelize.transaction((t) => {
                 return Card.create({
                         list_id: listId,
-                        title: cardName
+                        title: cardName,
+                        description: description
                     }, {
                         transaction: t
-                    })
+                    });
 
             })
             // .then((card) => {

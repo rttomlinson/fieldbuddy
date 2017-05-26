@@ -26,6 +26,11 @@ const createInputFields = (listId) => {
             label: "Name"
         },
         {
+            type: "text",
+            name: "cardDescription",
+            label: "Describe it a little"
+        },
+        {
             type: "hidden",
             name: "listId",
             value: listId

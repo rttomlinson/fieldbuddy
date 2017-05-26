@@ -5,10 +5,9 @@ import { Card, CardText, CardBlock,
 
 const StrapCard = (props) => {
     console.log("props", props);
-    const { Cards, id, name } = props;
+    const { id, name, children } = props;
   return (
-    <div>
-      <Card>
+      <Card id={id}>
         <CardBlock>
           <CardTitle>{name}</CardTitle>
           <CardSubtitle>List subtitle</CardSubtitle>
@@ -16,16 +15,9 @@ const StrapCard = (props) => {
           <Button>Add new card</Button>
         </CardBlock>
         <CardBlock>
-            <Card>
-                <CardBlock>
-                  <CardTitle>Card name</CardTitle>
-                  <CardSubtitle>Card subtitle</CardSubtitle>
-                  <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                </CardBlock>
-            </Card>
+            {children}
         </CardBlock>
       </Card>
-    </div>
   );
 };
 

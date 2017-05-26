@@ -3,24 +3,27 @@ import React from 'react';
 import { Card, CardText, CardBlock,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import NewCardForm from './NewCardForm';
-
+import CardModal from './CardModal';
 
 function makeCards(cards) {
     return cards.map(card => {
-            const { completed, title, description, id } = card;
+            const { completed, title, id } = card;
         return (
             <Card key={id}>
                 <CardBlock>
                     <CardTitle>Card: {title}</CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
-                    <CardText>{description}</CardText>
-                    <Button>Open</Button>
+                    <CardModal buttonLabel="Open" {...card}/>
                     <Button>{completed ? "Completed" : "In progress"}</Button>
                 </CardBlock>
             </Card>
         );
     });
 }
+
+
+
+
+
 
 const List = (props) => {
     const { Cards, boardId, name, children, id } = props;

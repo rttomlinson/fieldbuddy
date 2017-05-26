@@ -45,14 +45,9 @@ class CardsContainer extends Component {
         const { cards } = this.props;
         console.log("cards, and selectedCard", cards );
         return (
-            <Row>
-                <Col xs={12}>
-                    <NewCardForm formId={1} buttonLabel="+Add Card"/>
-                </Col>
-                <Col xs={12}>
-                    {makeCards(cards)}
-                </Col>
-            </Row>
+            <div>
+                {makeCards(cards)}
+            </div>
         );
     }
 }

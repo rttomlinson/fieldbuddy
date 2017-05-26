@@ -17,7 +17,7 @@ from 'reactstrap';
 function makeInputGroup(inputs) {
     return inputs.map((input) => {
         return (
-            <FormGroup key={input.name}>
+            <FormGroup hidden={input.type === 'hidden' ? true : false} key={input.name}>
               <Label for={input.name}>{input.label}</Label>
               <Input type={input.type} name={input.name} id={input.name} value={input.value} placeholder={input.name} />
             </FormGroup>
