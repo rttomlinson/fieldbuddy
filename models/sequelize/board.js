@@ -13,11 +13,13 @@ module.exports = function(sequelize, DataTypes) {
                 Board.hasMany(models.Boardmember, {
                     foreignKey: "board_id"
                 });
-
                 Board.belongsToMany(models.User, {
                     through: models.Boardmember,
                     as: 'UserBoard',
                     foreignKey: 'board_id'
+                });
+                Board.hasMany(models.List, {
+                    foreignKey: "board_id"
                 });
             }
         }

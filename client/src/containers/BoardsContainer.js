@@ -29,8 +29,7 @@ const makeLists = (lists) => {
 
 };
 
-
-class DashboardContainer extends Component {
+class BoardsContainer extends Component {
 
     componentDidMount() {
         console.log("dashboard did mount");
@@ -51,18 +50,16 @@ class DashboardContainer extends Component {
                         {makeLists(selectedBoard ? selectedBoard.Lists : [])}
                     </CardDeck>
                 </Row>
-                {children}
             </div>
         );
     }
 }
 
 function mapStateToProps(state, ownProps) {
+    
     return {
         boards: state.boards.data,
         selectedBoard: state.boards.data.find((board) => {
-            console.log("finding selected board", board.id);
-            console.log("path", ownProps.match.params.id);
             return board.id == ownProps.match.params.id;
         })
     };
@@ -77,4 +74,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardsContainer));

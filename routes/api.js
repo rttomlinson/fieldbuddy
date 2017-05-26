@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-module.exports = (User, Board, Boardmember, sequelize) => {
+module.exports = (User, List, Board, Boardmember, sequelize) => {
     //const h = helpers.registered;
     //post to boards/new
     router.post('/boards/new', (req, res, next) => {
@@ -49,7 +49,11 @@ module.exports = (User, Board, Boardmember, sequelize) => {
     });
     
     router.get('/boards', (req, res, next) => {
-        Board.findAll({})
+        Board.findAll({
+            include: [{
+                model: List
+            }]
+        })
         .then((boards) => {
             //scrub the tokens
             //make token virtual or something

@@ -9,12 +9,14 @@ import {
     Redirect
 }
 from 'react-router-dom';
-import DashboardContainer from '../containers/DashboardContainer';
 import LoginForm from './LoginForm';
 import RequireAuthContainer from '../containers/RequireAuthContainer';
+import BoardsContainer from '../containers/BoardsContainer';
 import Navbar from './Navbar';
 import { authorizeUser } from '../actions/authActions';
 import {connect} from 'react-redux';
+
+
 
 class App extends Component {
     
@@ -33,9 +35,11 @@ class App extends Component {
                         <Navbar />
                         <Switch>
                             <Route path="/login" component={LoginForm} />
-                            <Redirect exact from="/" to="/dashboard"/>
+                            <Redirect exact from="/" to="/dashboard/boards/1"/>
                             <RequireAuthContainer>
-                                <Route path="/dashboard" component={DashboardContainer}/>
+                                    <Route path="/dashboard/boards/:id" component={BoardsContainer}/>
+                                    <Redirect exact from="/dashboard/boards" to="/dashboard/boards/1"/>
+                                    <Route path="/dashboard/lists/:id" render={()=>{return <p>lists</p>}}/>
                             </RequireAuthContainer>
                             <Route render={() => {
                                     return (<div>Page not found</div>);

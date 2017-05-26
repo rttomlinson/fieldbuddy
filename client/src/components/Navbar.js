@@ -21,7 +21,7 @@ class DjelloNavbar extends React.Component {
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <NavLink to="/dashboard">Djello</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

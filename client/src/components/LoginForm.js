@@ -16,7 +16,7 @@ function makeInputGroup(inputs) {
               <Input type={input.type} name={input.name} id={input.name} placeholder={input.name} />
             </FormGroup>
         );
-    })
+    });
     
     
 }
@@ -29,7 +29,6 @@ class LoginForm extends Component{
                     {makeInputGroup(inputFields)}
                     <Button>Submit</Button>
                 </Form>
-            
             </div>
         );
         
