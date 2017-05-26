@@ -18,7 +18,7 @@ class BoardSelector extends React.Component {
         return (
           <Form onChange={changeBoard}>
             <FormGroup>
-              <Label for="board-select">Boards</Label>
+              <Label for="board-select">Select a boards:</Label>
               <Input type="select" name="boardSelect" id="board-select">
                 {makeOptions(boards)}
               </Input>
@@ -39,7 +39,5 @@ function mapDispatchToProps(dispatch, ownProps){
         }
     }
 }
-
-
 
 export default withRouter(connect(null, mapDispatchToProps)(BoardSelector));

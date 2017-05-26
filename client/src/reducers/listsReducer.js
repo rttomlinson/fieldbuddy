@@ -1,23 +1,23 @@
-import { REQUEST_BOARDS_FAILURE, REQUEST_BOARDS_SUCCESS, BOARD_CREATION_SUCCESS, BOARD_CREATION_FAILURE } from '../actions/boardsActions';
+import { REQUEST_LISTS_FAILURE, REQUEST_LISTS_SUCCESS, LIST_CREATION_SUCCESS, LIST_CREATION_FAILURE } from '../actions/listsActions';
 
 const INITIAL_STATE = {
     error: null,
     data: []
 };
 
-export default function boardsReducer(state = INITIAL_STATE, action){
+export default function listsReducer(state = INITIAL_STATE, action){
     switch(action.type){
-        case REQUEST_BOARDS_SUCCESS:
+        case REQUEST_LISTS_SUCCESS:
             return {
                 ...state,
                 data: action.data
             };
-        case REQUEST_BOARDS_FAILURE:
+        case REQUEST_LISTS_FAILURE:
             return {
                 ...state,
                 error: action.error
             };
-        case BOARD_CREATION_SUCCESS:
+        case LIST_CREATION_SUCCESS:
             return {
                 ...state,
                 data: [
@@ -25,7 +25,7 @@ export default function boardsReducer(state = INITIAL_STATE, action){
                     action.data
                 ]
             };
-        case BOARD_CREATION_FAILURE:
+        case LIST_CREATION_FAILURE:
             return {
                 ...state,
                 error: action.error

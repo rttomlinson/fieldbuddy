@@ -8,26 +8,10 @@ import {
 }
 from 'react-redux';
 import {fetchBoards} from '../actions/boardsActions';
-import List from '../components/List';
-import {
-    CardDeck,
-    Row
-}
-from 'reactstrap';
-import NewBoardForm from '../components/NewBoardForm';
-import BoardSelector from '../components/BoardSelector';
 import {withRouter} from 'react-router-dom';
+import RequireAuthContainer from './RequireAuthContainer';
+import Dashboard from '../components/Dashboard';
 
-
-
-const makeLists = (lists) => {
-    return lists.map((list) => {
-        return (
-            <List key={list.id} {...list}/>
-        );
-    });
-
-};
 
 
 class DashboardContainer extends Component {
@@ -40,19 +24,13 @@ class DashboardContainer extends Component {
     
     
     render() {
-        const {boards, selectedBoard, children} = this.props;
-        console.log("boards, and selectedBoard", boards, "selected", selectedBoard);
+        const {boards, currentBoard } = this.props;
+        if (boards.length === 0){
+            console.log("data needs to be fetched");
+            return <div>Probably loading...</div>;
+        }
         return (
-            <div className="container">
-                <NewBoardForm buttonLabel="+Add board"/>
-                <BoardSelector boards={boards}/>
-                <Row>
-                    <CardDeck>
-                        {makeLists(selectedBoard ? selectedBoard.Lists : [])}
-                    </CardDeck>
-                </Row>
-                {children}
-            </div>
+            <Dashboard {...this.props}/>
         );
     }
 }
@@ -60,9 +38,7 @@ class DashboardContainer extends Component {
 function mapStateToProps(state, ownProps) {
     return {
         boards: state.boards.data,
-        selectedBoard: state.boards.data.find((board) => {
-            console.log("finding selected board", board.id);
-            console.log("path", ownProps.match.params.id);
+        currentBoard: state.boards.data.find((board) => {
             return board.id == ownProps.match.params.id;
         })
     };
@@ -77,4 +53,14 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardContainer));
+
+const WrappedDashboardContainer = () => {
+    return(
+        <RequireAuthContainer>
+            <WiredDashboardContainer />
+        </RequireAuthContainer>
+    );
+};
+
+let WiredDashboardContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(DashboardContainer));
+export default WrappedDashboardContainer; 

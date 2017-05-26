@@ -9,7 +9,7 @@ import {
 from 'reactstrap';
 import FormWrapper from './elements/FormWrapper';
 import {
-    requestBoardCreation
+    requestCardCreation
 }
 from '../actions/boardsActions';
 import serialize from 'form-serialize';
@@ -18,16 +18,24 @@ import {
 }
 from 'react-redux';
 
-const inputFields = [{
-    type: "text",
-    name: "boardName",
-    label: "Name"
-}];
-
+const createInputFields = (listId) => {
+    return [
+        {
+            type: "text",
+            name: "cardName",
+            label: "Name"
+        },
+        {
+            type: "hidden",
+            name: "listId",
+            value: listId
+        }
+    ];
+};
 
 class NewBoardForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             modal: false
         };
@@ -43,15 +51,17 @@ class NewBoardForm extends React.Component {
 
     render() {
         const {
-            requestBoardCreation
+            requestCardCreation,
+            listId,
+            buttonLabel
         } = this.props;
         return (
             <div>
-        <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        <Button color="danger" onClick={this.toggle}>{buttonLabel}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Add new board</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Add new card</ModalHeader>
           <ModalBody>
-            <FormWrapper onSubmit={requestBoardCreation} id="new-board" inputFields={inputFields} onClick={this.toggle}/>
+            <FormWrapper buttonText={"Add card"} onSubmit={requestCardCreation} id="new-card" inputFields={createInputFields(listId)} onClick={this.toggle}/>
           </ModalBody>
         </Modal>
       </div>
@@ -63,16 +73,15 @@ class NewBoardForm extends React.Component {
 
 function mapDispatchToProps(dispatch) {
     return {
-        requestBoardCreation: (e) => {
+        requestCardCreation: (e) => {
             e.preventDefault();
             const form = serialize(e.target, {
                 hash: true
             });
-            console.log("form submitted", form);
+            console.log("new card form submitted", form);
 
-            dispatch(requestBoardCreation(form));
+            dispatch(requestCardCreation(form));
         }
     };
 }
-
 export default connect(null, mapDispatchToProps)(NewBoardForm);

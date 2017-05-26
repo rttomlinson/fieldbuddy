@@ -19,7 +19,7 @@ function makeInputGroup(inputs) {
         return (
             <FormGroup key={input.name}>
               <Label for={input.name}>{input.label}</Label>
-              <Input type={input.type} name={input.name} id={input.name} placeholder={input.name} />
+              <Input type={input.type} name={input.name} id={input.name} value={input.value} placeholder={input.name} />
             </FormGroup>
         );
     })
@@ -31,19 +31,25 @@ class FormWrapper extends Component {
             inputFields,
             id,
             onSubmit,
-            onClick
+            onClick,
+            buttonText
         } = this.props;
         return (
             <div id={id}>
                 <Form onSubmit={onSubmit}>
                     {makeInputGroup(inputFields)}
-                <Button type="submit" color="primary" onClick={onClick}>Add board</Button>{' '}
+                <Button type="submit" color="primary" onClick={onClick}>{buttonText}</Button>{' '}
                 </Form>
             </div>
         );
 
     }
 }
+
+FormWrapper.defaultProps = {
+    buttonText: "Add board"
+};
+
 
 
 export default FormWrapper;

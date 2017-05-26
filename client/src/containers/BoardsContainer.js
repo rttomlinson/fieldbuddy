@@ -17,13 +17,13 @@ from 'reactstrap';
 import NewBoardForm from '../components/NewBoardForm';
 import BoardSelector from '../components/BoardSelector';
 import {withRouter} from 'react-router-dom';
-
+import ListsContainer from './ListsContainer';
 
 
 const makeLists = (lists) => {
     return lists.map((list) => {
         return (
-            <List key={list.id} {...list}/>
+            <ListsContainer key={list.id} {...list}/>
         );
     });
 
@@ -39,16 +39,17 @@ class BoardsContainer extends Component {
     
     
     render() {
-        const {boards, selectedBoard, children} = this.props;
-        console.log("boards, and selectedBoard", boards, "selected", selectedBoard);
+        const {boards, selectedBoard } = this.props;
+        if (boards.length === 0){
+            console.log("empty board list, probably needs to load");
+            return null;
+        }
         return (
             <div className="container">
                 <NewBoardForm buttonLabel="+Add board"/>
                 <BoardSelector boards={boards}/>
                 <Row>
-                    <CardDeck>
                         {makeLists(selectedBoard ? selectedBoard.Lists : [])}
-                    </CardDeck>
                 </Row>
             </div>
         );

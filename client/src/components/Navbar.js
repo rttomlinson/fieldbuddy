@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, Button } from 'reactstrap';
 import NewBoardForm from './NewBoardForm';
 class DjelloNavbar extends React.Component {
   constructor(props) {
@@ -25,7 +25,9 @@ class DjelloNavbar extends React.Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NewBoardForm buttonLabel="+Add board"/>
+                <Button onClick={() => {
+                    console.log("Logout not yet implmented");
+                }}>Logout</Button>
               </NavItem>
             </Nav>
           </Collapse>
