@@ -28,7 +28,6 @@ function makeCards(cards) {
 const List = (props) => {
     const { Cards, boardId, name, children, id } = props;
   return (
-    <div>
       <Card>
         <CardBlock>
           <CardTitle>List: {name}</CardTitle>
@@ -40,7 +39,6 @@ const List = (props) => {
             {makeCards(Cards)}
         </CardBlock>
       </Card>
-    </div>
   );
 };
 
