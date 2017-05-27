@@ -88,24 +88,14 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
                 ...board.Lists[listWithCardIndex]
             };
             listCards = [
-                ...boardList.Cards
-            ];
-            cardIndex = listCards.findIndex((card) => {
-                return card.id == action.data.id;
-            });
-            let card = {
-                ...listCards[cardIndex],
-                completed: !card.completed
-            };
-            listCards = [
-                ...boardList.Cards.slice(0, cardIndex),
-                card,
-                ...boardList.Cards.slice(cardIndex + 1)
+                ...boardList.Cards,
+                action.data
             ];
             boardList = {
                 ...boardList,
                 Cards: listCards
             };
+
             board = {
                 ...board,
                 Lists: [
@@ -140,7 +130,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             boardList = {
                 ...board.Lists[listWithCardIndex]
             };
-            let listCards = {
+            listCards = {
                 ...boardList.Cards[cardIndex],
                 completed: !boardList.Cards[cardIndex].completed
             };

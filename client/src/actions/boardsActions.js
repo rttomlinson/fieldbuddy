@@ -186,11 +186,11 @@ export function requestCardToggle(form) {
             })
             .then((json) => {
                 console.log("cards creation success json", json);
-                dispatch(cardCreationSuccess(json.card));
+                dispatch(cardToggleSuccess(json.card));
             })
             .catch((err) => {
                 console.log("dispatch cards creation error", err);
-                dispatch(cardCreationFailure(`Error: ${err.status} - ${err.statusText}`));
+                dispatch(cardToggleFailure(`Error: ${err.status} - ${err.statusText}`));
             });
 
     };
