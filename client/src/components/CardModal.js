@@ -23,8 +23,7 @@ class CardModal extends React.Component {
   }
 
   render() {
-      const { description, title, completed, id, list_id, cardToggleSuccess } = this.props;
-      console.log("we have id and list_id in the modal?", id, list_id);
+      const { description, title, completed, id, cardToggleSuccess } = this.props;
     return (
       <div>
         <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>

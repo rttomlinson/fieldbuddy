@@ -2,93 +2,92 @@ import React, {
     Component
 }
 from 'react';
-import 'isomorphic-fetch';
 import {
     connect
 }
 from 'react-redux';
-// import {fetchLists} from '../actions/listsActions';
 import Card from '../components/Card';
-import {
-    CardDeck,
-    Row,
-    Col
-}
-from 'reactstrap';
+import {withRouter, NavLink} from 'react-router-dom';
+import RequireAuthContainer from './RequireAuthContainer';
+import { findListByListId } from '../helpers';
+import {fetchBoards} from '../actions/boardsActions';
 import List from '../components/List';
-import NewListForm from '../components/NewListForm';
-// import {withRouter} from 'react-router-dom';
-
-// const makeCards = (cards) => {
-//     return cards.map((card) => {
-//         return (
-//             <Card key={card.id} {...card}/>
-//         );
-//     });
-
-// };
 
 
-const makeLists = (lists) => {
-    return lists.map((list) => {
+const makeCards = (cards) => {
+    return cards.map((card) => {
         return (
-            <Row key={list.id}>
-                <Col>
-                    <List  {...list}/>
-                </Col>
-            </Row>
+            <Card key={card.id} {...card}/>
         );
     });
 
 };
 
-
-
 class ListsContainer extends Component {
 
-    // componentDidMount() {
-    //     console.log("dashboard did mount");
-    //     //fetch initial data
-    //     this.props.fetchLists();
-    // }
+    componentDidMount() {
+        console.log("list did mount");
+        //check to see if data has been fetched or is fetching..?
+        console.log("all props from state", this.props);
+        if (this.props.boards.length === 0) {
+            this.props.fetchBoards();
+        }
+    }
     
     
     render() {
-        const { lists } = this.props;
-        console.log("lists, and selectedList", lists );
+        const { selectedList, boardId } = this.props;
+        console.log("lists, and selectedList", selectedList );
+        if (selectedList === -1) {
+            return (
+                <div>
+                    <p>Hmm...looks like there isn't a list by that name. Trying going back to the board and selected something else.</p>
+                    <NavLink to={`/dashboard/boards/${boardId}`}>Back to the board</NavLink>
+                </div>
+            );
+        }
+        if (selectedList === -2) {
+            return (
+                <div>
+                    <p>It's probably still loading</p>
+                    <NavLink to="/dashboard">Click here to go back to the rest of your boards</NavLink>
+                </div>    
+            );
+        }
         return (
-            <Row>
-                <Col xs={12}>
-                    <NewListForm boardId={1} buttonLabel="+Add List"/>
-                </Col>
-                <Col xs={12}>
-                    {makeLists(lists)}
-                </Col>
-            </Row>
+            <List Cards={selectedList.Cards} name={selectedList.name} id={selectedList.id} />
         );
     }
 }
 
-// function mapStateToProps(state, ownProps) {
-//     const selectedList = state.lists.data.find((list) => {
-//             return list.id == ownProps.match.params.id;
-//         });
-//     return {
-//         lists: state.lists.data,
-//         selectedList,
-//         currentBoard: (selectedList ? selectedList.board_id : null)
+function mapStateToProps(state, ownProps) {
+    console.log("ownProps", ownProps, state);
+    const selectedList = findListByListId(ownProps.match.params.listId, state.boards.data);
+    return {
+        boards: state.boards.data,
+        selectedList,
+        boardId: ownProps.match.params.boardId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchBoards: () => {
+            dispatch(fetchBoards());
+        }
+    };
+}
+
+
+
+
+const WiredListsContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(ListsContainer));
+const WrappedListsContainer = () => {
+    return (
+        <RequireAuthContainer>
+            <WiredListsContainer />
+        </RequireAuthContainer>
         
-//     };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         fetchLists: () => {
-//             dispatch(fetchLists());
-//         }
-//     };
-// }
-
-
-// export default withRouter(connect(null, mapDispatchToProps)(ListsContainer));
-export default ListsContainer;
+    );
+};
+export default WrappedListsContainer;

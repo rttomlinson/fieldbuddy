@@ -47,14 +47,14 @@ class NewBoardForm extends React.Component {
         } = this.props;
         return (
             <div>
-        <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Add new board</ModalHeader>
-          <ModalBody>
-            <FormWrapper onSubmit={requestBoardCreation} id="new-board" inputFields={inputFields} onClick={this.toggle}/>
-          </ModalBody>
-        </Modal>
-      </div>
+                <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                  <ModalHeader toggle={this.toggle}>Add new board</ModalHeader>
+                  <ModalBody>
+                    <FormWrapper onSubmit={requestBoardCreation} id="new-board" inputFields={inputFields} onClick={this.toggle}/>
+                  </ModalBody>
+                </Modal>
+            </div>
         );
     }
 }

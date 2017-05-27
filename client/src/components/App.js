@@ -28,9 +28,9 @@ class App extends Component {
                         <Switch>
                             <Route path="/login" component={LoginForm} />
                             <Redirect exact from="/" to="/dashboard/boards/1"/>
+                            <Route path="/dashboard/boards/:boardId/lists/:listId" component={ListsContainer}/>
                             <Route path="/dashboard/boards/:id" component={DashboardContainer}/>
                             <Redirect exact from="/dashboard/boards" to="/dashboard/boards/1"/>
-                            <Route path="/dashboard/lists/:id" component={ListsContainer}/>
                             <Route render={() => {
                                     return (<div>Page not found</div>);
                             }} />

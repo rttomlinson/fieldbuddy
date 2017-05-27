@@ -112,7 +112,7 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
                 });
             })
             .then((list) => {
-                console.log("expect the newly created list", list)
+                //expect the newly created list
                 res.status(201).json({
                     list
                 });
@@ -151,8 +151,6 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
         const cardName = req.body.cardName;
         const listId = req.body.listId;
         const description = req.body.cardDescription;
-        console.log('cardName', cardName);
-        console.log("listId", listId);
         //expect to get user info from req.user
         //Create a new board instance
         sequelize.transaction((t) => {
@@ -174,7 +172,6 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
             //     });
             // })
             .then((card) => {
-                console.log("expect the newly created card", card)
                 res.status(201).json({
                     card
                 });

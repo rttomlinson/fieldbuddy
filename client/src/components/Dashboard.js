@@ -5,7 +5,7 @@ import { Col, Row } from 'reactstrap';
 import Card from './Card';
 import List from './List';
 import NewListForm from './NewListForm';
-
+import DashboardNav from './DashboardNav';
 
 function showCurrentlySelectedListsOfBoard(currentBoard) {
     return currentBoard.Lists.map((list) => {
@@ -23,10 +23,8 @@ function showCurrentlySelectedListsOfBoard(currentBoard) {
 const Dashboard = ({boards, currentBoard}) => {
     return (
         <div className="container">
-            <NewBoardForm buttonLabel={"+Board"} />
-            <BoardSelector boards={boards}/>
+            <DashboardNav boards={boards}/>
             <NewListForm buttonLabel={"Add new list"} boardId={currentBoard.id}></NewListForm>
-
             <Row>
                 {showCurrentlySelectedListsOfBoard(currentBoard)}
             </Row>

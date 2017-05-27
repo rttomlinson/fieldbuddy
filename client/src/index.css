@@ -4,6 +4,11 @@ body {
   font-family: sans-serif;
 }
 
+.flex-space-between {
+    justify-content: space-between;
+}
+
+
 #login-form {
     display:flex;
     align-items: center;
