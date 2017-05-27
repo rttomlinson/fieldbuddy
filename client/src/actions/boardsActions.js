@@ -148,6 +148,58 @@ export function requestCardCreation(form) {
 }
 
 
+export const CARD_TOGGLE_SUCCESS = "CARD_TOGGLE_SUCCESS";
+export const CARD_TOGGLE_FAILURE = "CARD_TOGGLE_FAILURE";
+
+export function cardToggleSuccess(data) {
+    return {
+        type: CARD_TOGGLE_SUCCESS,
+        data
+    };
+}
+export function cardToggleFailure(error) {
+    return {
+        type: CARD_TOGGLE_FAILURE,
+        error
+    };
+}
+
+export function requestCardToggle(form) {
+    return (dispatch) => {
+        
+        const token = localStorage.getItem("token");
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        const _options = {
+            headers: myHeaders,
+            method: 'post',
+            body: JSON.stringify(form)
+        }
+        return fetch(`/api/cards/new?token=${token}`, _options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log("cards creation success json", json);
+                dispatch(cardCreationSuccess(json.card));
+            })
+            .catch((err) => {
+                console.log("dispatch cards creation error", err);
+                dispatch(cardCreationFailure(`Error: ${err.status} - ${err.statusText}`));
+            });
+
+    };
+}
+
+
+
+
+
 
 export function requestBoardsSuccess(data) {
     return {

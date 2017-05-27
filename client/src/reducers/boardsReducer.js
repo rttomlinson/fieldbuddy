@@ -1,13 +1,24 @@
-import { REQUEST_BOARDS_FAILURE, REQUEST_BOARDS_SUCCESS, BOARD_CREATION_SUCCESS, BOARD_CREATION_FAILURE, LIST_CREATION_FAILURE, LIST_CREATION_SUCCESS, CARD_CREATION_SUCCESS, CARD_CREATION_FAILURE } from '../actions/boardsActions';
+import {
+    REQUEST_BOARDS_FAILURE,
+    REQUEST_BOARDS_SUCCESS,
+    BOARD_CREATION_SUCCESS,
+    BOARD_CREATION_FAILURE,
+    LIST_CREATION_FAILURE,
+    LIST_CREATION_SUCCESS,
+    CARD_CREATION_SUCCESS,
+    CARD_CREATION_FAILURE,
+    CARD_TOGGLE_SUCCESS
+}
+from '../actions/boardsActions';
 
 const INITIAL_STATE = {
     error: null,
     data: []
 };
 
-export default function boardsReducer(state = INITIAL_STATE, action){
-    let board, boardIndex, boardList;
-    switch(action.type){
+export default function boardsReducer(state = INITIAL_STATE, action) {
+    let board, boardIndex, boardList, listCards, listWithCardIndex, cardIndex, cardId;
+    switch (action.type) {
         case REQUEST_BOARDS_SUCCESS:
             return {
                 ...state,
@@ -61,7 +72,7 @@ export default function boardsReducer(state = INITIAL_STATE, action){
             };
         case CARD_CREATION_SUCCESS:
             console.log("successful card creation");
-            let listWithCardIndex;
+
             boardIndex = state.data.findIndex((board) => {
                 listWithCardIndex = board.Lists.findIndex((list) => {
                     return list.id == action.data.list_id;
@@ -76,13 +87,71 @@ export default function boardsReducer(state = INITIAL_STATE, action){
             boardList = {
                 ...board.Lists[listWithCardIndex]
             };
-            let listCards = [
-                ...boardList.Cards,
-                action.data
+            listCards = [
+                ...boardList.Cards
+            ];
+            cardIndex = listCards.findIndex((card) => {
+                return card.id == action.data.id;
+            });
+            let card = {
+                ...listCards[cardIndex],
+                completed: !card.completed
+            };
+            listCards = [
+                ...boardList.Cards.slice(0, cardIndex),
+                card,
+                ...boardList.Cards.slice(cardIndex + 1)
             ];
             boardList = {
                 ...boardList,
                 Cards: listCards
+            };
+            board = {
+                ...board,
+                Lists: [
+                    ...board.Lists.slice(0, listWithCardIndex),
+                    boardList,
+                    ...board.Lists.slice(listWithCardIndex + 1)
+                ]
+            };
+            return {
+                ...state,
+                data: [
+                    ...state.data.slice(0, boardIndex),
+                    board,
+                    ...state.data.slice(boardIndex + 1)
+                ]
+            };
+        case CARD_TOGGLE_SUCCESS:
+            cardId = action.data;
+            boardIndex = state.data.findIndex((board) => {
+                listWithCardIndex = board.Lists.findIndex((list) => {
+                    cardIndex = list.Cards.findIndex((card) => {
+                        return action.data == card.id;
+                    });
+                    
+                    return cardIndex > -1;
+                });
+                return listWithCardIndex > -1;
+            });
+            board = {
+                ...state.data[boardIndex]
+            };
+            boardList = {
+                ...board.Lists[listWithCardIndex]
+            };
+            let listCards = {
+                ...boardList.Cards[cardIndex],
+                completed: !boardList.Cards[cardIndex].completed
+            };
+            let cardsOfList = [
+                ...boardList.Cards.slice(0, cardIndex),
+                listCards,
+                ...boardList.Cards.slice(cardIndex + 1)
+            ];
+            boardList = {
+                ...boardList,
+                Cards: cardsOfList
             };
             board = {
                 ...board,

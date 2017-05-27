@@ -2,6 +2,9 @@
 
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {cardToggleSuccess} from '../actions/boardsActions';
+import {connect} from 'react-redux';
+
 
 class CardModal extends React.Component {
   constructor(props) {
@@ -20,7 +23,8 @@ class CardModal extends React.Component {
   }
 
   render() {
-      const { description, title, completed } = this.props;
+      const { description, title, completed, id, list_id, cardToggleSuccess } = this.props;
+      console.log("we have id and list_id in the modal?", id, list_id);
     return (
       <div>
         <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
@@ -30,7 +34,7 @@ class CardModal extends React.Component {
             {description}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>{completed ? "Completed" : "In progress"}</Button>{' '}
+            <Button color="primary" onClick={() => cardToggleSuccess(id)}>{completed ? "Completed" : "In progress"}</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -39,5 +43,9 @@ class CardModal extends React.Component {
   }
 }
 
+const mapDispatchToProps = {
+    cardToggleSuccess
+};
 
-export default CardModal;
+
+export default connect(null, mapDispatchToProps)(CardModal);
