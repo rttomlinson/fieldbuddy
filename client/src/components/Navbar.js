@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Button } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 import NewBoardForm from './NewBoardForm';
 class DjelloNavbar extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class DjelloNavbar extends React.Component {
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavLink to="/dashboard">Djello</NavLink>
+          <NavLink to="/dashboard/boards">Djello</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

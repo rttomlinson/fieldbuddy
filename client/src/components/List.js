@@ -3,19 +3,13 @@ import React from 'react';
 import { Card, CardText, CardBlock,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 import NewCardForm from './NewCardForm';
-import CardModal from './CardModal';
+import CardCard from './Card';
+
 
 function makeCards(cards) {
     return cards.map(card => {
-            const { completed, title, id } = card;
         return (
-            <Card key={id}>
-                <CardBlock>
-                    <CardTitle>Card: {title}</CardTitle>
-                    <CardModal buttonLabel="Open" {...card}/>
-                    <Button>{completed ? "Completed" : "In progress"}</Button>
-                </CardBlock>
-            </Card>
+            <CardCard key={card.id} card={card} />
         );
     });
 }

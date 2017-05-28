@@ -2,20 +2,19 @@ import React from 'react';
 
 import { Card, CardText, CardBlock,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
+import CardModal from './CardModal';
+
+
 
 const StrapCard = (props) => {
-    console.log("props", props);
-    const { id, name, children } = props;
+    const { card } = props;
   return (
-      <Card id={id}>
+      <Card>
         <CardBlock>
-          <CardTitle>{name}</CardTitle>
-          <CardSubtitle>List subtitle</CardSubtitle>
+          <CardTitle>Card: {card.title}</CardTitle>
+          <CardSubtitle>Card: subtitle</CardSubtitle>
           <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Add new card</Button>
-        </CardBlock>
-        <CardBlock>
-            {children}
+          <CardModal buttonLabel="Open" {...card}/>
         </CardBlock>
       </Card>
   );

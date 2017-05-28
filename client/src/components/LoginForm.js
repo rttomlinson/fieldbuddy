@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch, ownProps){
             dispatch(requestUserAuthorization(form))
             .then((response) => {
                 //this should actually go back to the page it was last on...
-                ownProps.history.push('/dashboard');
+                ownProps.history.push('/dashboard/boards');
             });
         }
     };
