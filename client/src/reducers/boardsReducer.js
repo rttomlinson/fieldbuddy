@@ -3,6 +3,7 @@ import {
     REQUEST_BOARDS_SUCCESS,
     BOARD_CREATION_SUCCESS,
     BOARD_CREATION_FAILURE,
+    BOARD_REMOVAL_SUCCESS,
     LIST_CREATION_FAILURE,
     LIST_CREATION_SUCCESS,
     CARD_CREATION_SUCCESS,
@@ -41,6 +42,23 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 error: action.error
+            };
+        case BOARD_REMOVAL_SUCCESS:
+            boardIndex = state.data.findIndex((board) => {
+                return action.data == board.id;
+            });
+            
+            //if board was not found, just return the current state
+            if (boardIndex === -1) {
+                return state;
+            }
+            
+            return {
+                ...state,
+                data: [
+                    ...state.data.slice(0, boardIndex),
+                    ...state.data.slice(boardIndex + 1)
+                ]
             };
         case LIST_CREATION_SUCCESS:
             boardIndex = state.data.findIndex((board) => {

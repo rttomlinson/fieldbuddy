@@ -16,5 +16,13 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
+    List.afterDestroy((list) => {
+        console.log("deleting associatied lists", list.id);
+        let Card = sequelize.models.Card;
+        Card.destroy({
+            where: { list_id: list.id },
+            individualHooks: true
+        });
+    });
     return List;
 };

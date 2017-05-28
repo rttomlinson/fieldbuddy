@@ -7,7 +7,7 @@ import {
     connect
 }
 from 'react-redux';
-import {fetchBoards} from '../actions/boardsActions';
+import {fetchBoards, requestBoardRemoval} from '../actions/boardsActions';
 import {withRouter} from 'react-router-dom';
 import RequireAuthContainer from './RequireAuthContainer';
 import Dashboard from '../components/Dashboard';
@@ -39,15 +39,19 @@ function mapStateToProps(state, ownProps) {
     return {
         boards: state.boards.data,
         currentBoard: state.boards.data.find((board) => {
-            return board.id == ownProps.match.params.id;
+            return board.id == ownProps.match.params.boardId;
         })
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
     return {
         fetchBoards: () => {
             dispatch(fetchBoards());
+        },
+        requestBoardRemoval: () => {
+            dispatch(requestBoardRemoval(ownProps.match.params.boardId));
+            ownProps.history.replace('/dashboard/boards');
         }
     };
 }

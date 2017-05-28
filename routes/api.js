@@ -80,6 +80,22 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
         });
     });
     
+    //delete a board
+    router.delete('/boards', (req, res, next) => {
+        let boardId = req.body.boardId;
+        Board.destroy({
+                where: { id: boardId },
+                individualHooks: true
+        })
+        .then(() => {
+            res.status(204).json({boardId});
+        });
+    });
+    
+    
+    
+    
+    
     
     //--------------------------
     // lists

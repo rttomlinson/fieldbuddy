@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 export const REQUEST_BOARDS_SUCCESS = "REQUEST_BOARDS_SUCCESS";
 export const REQUEST_BOARDS_FAILURE = "REQUEST_BOARDS_FAILURE";
 
@@ -197,9 +199,52 @@ export function requestCardToggle(form) {
 }
 
 
+export const BOARD_REMOVAL_SUCCESS = "BOARD_REMOVAL_SUCCESS";
+export const BOARD_REMOVAL_FAILURE = "BOARD_REMOVAL_FAILURE";
 
+export function boardRemovalSuccess(data) {
+    return {
+        type: BOARD_REMOVAL_SUCCESS,
+        data
+    };
+}
+export function boardRemovalFailure(error) {
+    return {
+        type: BOARD_REMOVAL_FAILURE,
+        error
+    };
+}
 
+export function requestBoardRemoval(boardId, token) {
+    return (dispatch) => {
+        // const token = localStorage.getItem("token");
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json'
+        });
 
+        const _options = {
+            headers: myHeaders,
+            method: 'post',
+            body: JSON.stringify({boardId, _method: "DELETE"})
+        }
+        return fetch(`/api/boards?token=${token}`, _options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.status
+            })
+            .then((status) => {
+                console.log("boardDeletion success json", status);
+                dispatch(boardRemovalSuccess(boardId));
+            })
+            .catch((err) => {
+                console.log("dispatch boardDeletion error", err);
+                dispatch(boardRemovalFailure(`Error: ${err.status} - ${err.statusText}`));
+            });
+
+    };
+}
 
 export function requestBoardsSuccess(data) {
     return {

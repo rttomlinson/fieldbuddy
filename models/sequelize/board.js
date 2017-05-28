@@ -1,4 +1,6 @@
 'use strict';
+
+
 module.exports = function(sequelize, DataTypes) {
     var Board = sequelize.define('Board', {
         name: DataTypes.STRING,
@@ -23,6 +25,14 @@ module.exports = function(sequelize, DataTypes) {
                 });
             }
         }
+    });
+    Board.afterDestroy((board) => {
+        console.log("board deleted", board);
+        let List = sequelize.models.List;
+        List.destroy({
+            where: { board_id: board.id },
+            individualHooks: true
+        });
     });
     return Board;
 };

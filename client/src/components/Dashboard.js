@@ -30,10 +30,11 @@ function showListsOfCurrentlySelectedBoard(currentBoard) {
 
 
 
-const Dashboard = ({boards, currentBoard}) => {
+const Dashboard = ({boards, currentBoard, requestBoardRemoval}) => {
+    console.log("currentBoard", currentBoard);
     return (
         <div className="container">
-            <DashboardNav boards={boards}/>
+            <DashboardNav boards={boards} requestBoardRemoval={requestBoardRemoval}/>
             <NewListForm buttonLabel={"Add new list"} boardId={currentBoard.id}></NewListForm>
             <Row>
                 {showListsOfCurrentlySelectedBoard(currentBoard)}

@@ -14,18 +14,26 @@ const makeOptions = (boards) => {
 
 class BoardSelector extends React.Component {
   render() {
-      const {changeBoard, boards} = this.props;
+      const {changeBoard, boards, currentBoard} = this.props;
         return (
           <Form onChange={changeBoard}>
             <FormGroup>
               <Label for="board-select">Select a boards:</Label>
-              <Input type="select" name="boardSelect" id="board-select">
+              <Input type="select" name="boardSelect" id="board-select" value={currentBoard ? currentBoard.id : void 0}>
                 {makeOptions(boards)}
               </Input>
             </FormGroup>
           </Form>
         );
   }
+}
+
+function mapStateToProps(state, ownProps){
+    return {
+        currentBoard: state.boards.data.find((board) => {
+            return board.id == ownProps.match.params.boardId;
+        })
+    };
 }
 
 
@@ -37,7 +45,7 @@ function mapDispatchToProps(dispatch, ownProps){
             ownProps.history.push(`/dashboard/boards/${board}`);
             
         }
-    }
+    };
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(BoardSelector));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardSelector));

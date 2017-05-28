@@ -27,10 +27,10 @@ class App extends Component {
                         <Navbar />
                         <Switch>
                             <Route path="/login" component={LoginForm} />
-                            <Redirect exact from="/" to="/dashboard/boards/1"/>
+                            <Redirect exact from="/" to="/dashboard/boards"/>
                             <Route path="/dashboard/boards/:boardId/lists/:listId" component={ListsContainer}/>
-                            <Route path="/dashboard/boards/:id" component={DashboardContainer}/>
-                            <Redirect exact from="/dashboard/boards" to="/dashboard/boards/1"/>
+                            <Route path="/dashboard/boards/:boardId" component={DashboardContainer}/>
+                            <Route exact path="/dashboard/boards" component={BoardsContainer}/>
                             <Route render={() => {
                                     return (<div>Page not found</div>);
                             }} />
