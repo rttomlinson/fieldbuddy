@@ -24,12 +24,10 @@ class LoginForm extends Component{
     render(){
         const {requestUserAuthorization} = this.props;
         return (
-            <div id="login-form">
-                <Form onSubmit={requestUserAuthorization}>
-                    {makeInputGroup(inputFields)}
-                    <Button>Submit</Button>
-                </Form>
-            </div>
+            <Form id="login-form" onSubmit={requestUserAuthorization}>
+                {makeInputGroup(inputFields)}
+                <Button color="primary">Login</Button>
+            </Form>
         );
         
     }

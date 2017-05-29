@@ -31,13 +31,13 @@ function showListsOfCurrentlySelectedBoard(currentBoard) {
 
 
 
-const Dashboard = ({boards, currentBoard, requestBoardRemoval, users}) => {
+const Dashboard = ({boards, currentBoard, requestBoardRemoval, users, requestAddBoardmember, requestRemoveBoardmember}) => {
     console.log("currentBoard", currentBoard);
     return (
         <div className="container">
             <DashboardNav boards={boards} requestBoardRemoval={requestBoardRemoval}/>
             <NewListForm buttonLabel={"Add new list"} boardId={currentBoard.id}></NewListForm>
-            <BoardPermissions currentBoard={currentBoard} users={users} buttonLabel="Manage Permissions"/>
+            <BoardPermissions requestAddBoardmember={requestAddBoardmember} requestRemoveBoardmember={requestRemoveBoardmember} currentBoard={currentBoard} users={users} buttonLabel="Manage Permissions"/>
             
             <Row>
                 {showListsOfCurrentlySelectedBoard(currentBoard)}

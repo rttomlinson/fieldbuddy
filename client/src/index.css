@@ -10,11 +10,8 @@ body {
 
 
 #login-form {
-    display:flex;
-    align-items: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     margin: auto;
-    justify-content: center;
     height: 100vh;
 }

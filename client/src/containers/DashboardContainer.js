@@ -7,7 +7,7 @@ import {
     connect
 }
 from 'react-redux';
-import {fetchBoards, requestBoardRemoval} from '../actions/boardsActions';
+import {fetchBoards, requestBoardRemoval, requestAddBoardmember, requestRemoveBoardmember} from '../actions/boardsActions';
 import {fetchUsers} from '../actions/usersActions';
 import {withRouter} from 'react-router-dom';
 import RequireAuthContainer from './RequireAuthContainer';
@@ -60,6 +60,12 @@ function mapDispatchToProps(dispatch, ownProps) {
         },
         fetchUsers: () => {
             dispatch(fetchUsers());
+        },
+        requestRemoveBoardmember: (boardId, memberId) => {
+            dispatch(requestRemoveBoardmember(boardId, memberId));
+        },
+        requestAddBoardmember: (boardId, memberId) => {
+            dispatch(requestAddBoardmember(boardId, memberId));
         }
     };
 }

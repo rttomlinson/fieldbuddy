@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, Button } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import NewBoardForm from './NewBoardForm';
+
 class DjelloNavbar extends React.Component {
   constructor(props) {
     super(props);
@@ -17,18 +17,30 @@ class DjelloNavbar extends React.Component {
       isOpen: !this.state.isOpen
     });
   }
+  
+  
+  logoutButton = () => {
+      if (!localStorage.getItem("token")) {
+          return null;
+      }
+      return (
+          <Button onClick={() => {
+                        localStorage.removeItem('token');
+                        window.location = '/login';
+            }}>Logout</Button>
+        );
+  }
   render() {
+
     return (
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavLink to="/dashboard/boards">Djello</NavLink>
+          <NavLink style={{fontSize:"1.4em", textDecoration: "none"}} to="/dashboard/boards">Djello</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Button onClick={() => {
-                    console.log("Logout not yet implmented");
-                }}>Logout</Button>
+                    {this.logoutButton()}
               </NavItem>
             </Nav>
           </Collapse>
@@ -37,5 +49,6 @@ class DjelloNavbar extends React.Component {
     );
   }
 }
+
 
 export default DjelloNavbar;

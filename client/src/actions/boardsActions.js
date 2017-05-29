@@ -372,6 +372,41 @@ export function boardmemberAddFailure(error) {
     };
 }
 
+export function requestAddBoardmember(boardId, memberId, token) {
+    return (dispatch) => {
+        if (!token) {
+            token = localStorage.getItem('token');
+        }
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json'
+        });
+        const _options = {
+            headers: myHeaders,
+            method: 'post',
+            body: JSON.stringify({
+                boardId,
+                memberId
+            })
+        };
+        return fetch(`/api/boards/${boardId}/users?token=${token}`, _options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response.json();
+            })
+            .then((json) => {
+                console.log("boardmembers add success json", json);
+                dispatch(boardmemberAddSuccess(json.boardmember));
+            })
+            .catch((err) => {
+                console.log("boardmembers add failure error", err);
+                dispatch(boardmemberAddFailure(`Error: ${err.status} - ${err.statusText}`));
+            });
+    }
+}
+
+
 export const BOARDMEMBER_REMOVE_SUCCESS = "BOARDMEMBER_REMOVE_SUCCESS";
 export const BOARDMEMBER_REMOVE_FAILURE = "BOARDMEMBER_REMOVE_FAILURE";
 
@@ -386,4 +421,40 @@ export function boardmemberRemoveFailure(error) {
         type: BOARDMEMBER_REMOVE_FAILURE,
         error
     };
+}
+
+
+export function requestRemoveBoardmember(boardId, memberId, token) {
+    return (dispatch) => {
+        if (!token) {
+            token = localStorage.getItem('token');
+        }
+        const myHeaders = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        const _options = {
+            headers: myHeaders,
+            method: 'post',
+            body: JSON.stringify({
+                boardId,
+                memberId
+            })
+        };
+        return fetch(`/api/boards/${boardId}/users?token=${token}&_method=DELETE`, _options)
+            .then((response) => {
+                if (!response.ok) {
+                    throw response;
+                }
+                return response;
+            })
+            .then((json) => {
+                console.log("boardmembers add success json");
+                dispatch(boardmemberRemoveSuccess({boardId, memberId}));
+            })
+            .catch((err) => {
+                console.log("boardmembers add failure error", err);
+                dispatch(boardmemberRemoveFailure(`Error: ${err.status} - ${err.statusText}`));
+            });
+    }
 }
