@@ -3,11 +3,14 @@
     "proxies": {
         "/api/": {
             "origin": "https://calm-atoll-30465.herokuapp.com/api"
+        },
+        "/auth/": {
+            "origin": "https://calm-atoll-30465.herokuapp.com/auth"
+
         }
     },
     "routes": {
         "/static/**": "/static/",
         "/**": "index.html"
     }
-    
 }
