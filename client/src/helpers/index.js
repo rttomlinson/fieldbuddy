@@ -102,5 +102,46 @@ export function findListByListId(listId, boards) {
     }
     
     return boards[boardIndex].Lists[listIndex];
+}
 
+export function findCardByCardId(cardId, boards) {
+    let boardIndex;
+    let listIndex;
+    let cardIndex;
+    boardIndex = boards.findIndex((board) => {
+        listIndex =  board.Lists.findIndex((list) => {
+            cardIndex = list.Cards.findIndex((card) => {
+                return card.id == cardId;
+            });
+            return cardIndex > -1;
+        });
+        return listIndex > -1;
+    });
+    if (boardIndex === -1) {
+        //list was not found in any of the boards;
+        return -1;
+    }
+    
+    return boards[boardIndex].Lists[listIndex].Cards[cardIndex];
+}
+
+export function findCardPathById(cardId, boards) {
+    let boardIndex;
+    let listIndex;
+    let cardIndex;
+    boardIndex = boards.findIndex((board) => {
+        listIndex =  board.Lists.findIndex((list) => {
+            cardIndex = list.Cards.findIndex((card) => {
+                return card.id == cardId;
+            });
+            return cardIndex > -1;
+        });
+        return listIndex > -1;
+    });
+    if (boardIndex === -1) {
+        //list was not found in any of the boards;
+        return -1;
+    }
+    
+    return `${boardIndex}:${listIndex}:${cardIndex}`;
 }

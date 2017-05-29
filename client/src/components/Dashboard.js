@@ -1,12 +1,12 @@
 import React from 'react'
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Button } from 'reactstrap';
 import List from './List';
 import NewListForm from './NewListForm';
 import DashboardNav from './DashboardNav';
 import {Link} from 'react-router-dom';
 import { Card, CardText, CardBlock,
   CardTitle, CardSubtitle } from 'reactstrap';
-
+import BoardPermissions from './BoardPermissions';
 
 //<List {...list} boardId={currentBoard.id}/>
 function showListsOfCurrentlySelectedBoard(currentBoard) {
@@ -30,12 +30,15 @@ function showListsOfCurrentlySelectedBoard(currentBoard) {
 
 
 
-const Dashboard = ({boards, currentBoard, requestBoardRemoval}) => {
+
+const Dashboard = ({boards, currentBoard, requestBoardRemoval, users}) => {
     console.log("currentBoard", currentBoard);
     return (
         <div className="container">
             <DashboardNav boards={boards} requestBoardRemoval={requestBoardRemoval}/>
             <NewListForm buttonLabel={"Add new list"} boardId={currentBoard.id}></NewListForm>
+            <BoardPermissions currentBoard={currentBoard} users={users} buttonLabel="Manage Permissions"/>
+            
             <Row>
                 {showListsOfCurrentlySelectedBoard(currentBoard)}
             </Row>

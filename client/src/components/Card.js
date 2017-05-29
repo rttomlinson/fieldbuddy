@@ -5,6 +5,11 @@ import { Card, CardText, CardBlock,
 import CardModal from './CardModal';
 
 
+const statusMessage = (completed) => {
+    return completed ? (<span style={{color: "green"}}>Completed</span>) : (<span style={{color:"red"}}>In progress</span>);
+};
+
+
 
 const StrapCard = (props) => {
     const { card } = props;
@@ -12,8 +17,8 @@ const StrapCard = (props) => {
       <Card>
         <CardBlock>
           <CardTitle>Card: {card.title}</CardTitle>
-          <CardSubtitle>Card: subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <CardSubtitle>{statusMessage(card.completed)}</CardSubtitle>
+          <CardText>{card.description}</CardText>
           <CardModal buttonLabel="Open" {...card}/>
         </CardBlock>
       </Card>

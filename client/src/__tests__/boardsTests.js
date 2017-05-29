@@ -15,6 +15,7 @@ import {
     REQUEST_BOARDS_SUCCESS,
     BOARD_CREATION_SUCCESS,
     BOARD_REMOVAL_SUCCESS,
+    UPDATE_CARD_SUCCESS,
     fetchBoardsCreator,
     boardsFetchCall,
     requestBoards
@@ -76,7 +77,7 @@ it("add a new board to the list", function() {
     deepFreeze(action);
     expect(boardsReducer(initialState, action)).toEqual(finalState);
 });
-it("removes a board from the list by board id", function() {
+it("removes a board from the data by board id", function() {
     const initialState = {
         data: [{
             id: 1,
@@ -103,6 +104,7 @@ it("removes a board from the list by board id", function() {
     deepFreeze(action);
     expect(boardsReducer(initialState, action)).toEqual(finalState);
 });
+
 
 
 

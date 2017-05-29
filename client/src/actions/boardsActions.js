@@ -150,26 +150,76 @@ export function requestCardCreation(form) {
 }
 
 
-export const CARD_TOGGLE_SUCCESS = "CARD_TOGGLE_SUCCESS";
-export const CARD_TOGGLE_FAILURE = "CARD_TOGGLE_FAILURE";
+// export const CARD_TOGGLE_SUCCESS = "CARD_TOGGLE_SUCCESS";
+// export const CARD_TOGGLE_FAILURE = "CARD_TOGGLE_FAILURE";
 
-export function cardToggleSuccess(data) {
+// export function cardToggleSuccess(data) {
+//     return {
+//         type: CARD_TOGGLE_SUCCESS,
+//         data
+//     };
+// }
+// export function cardToggleFailure(error) {
+//     return {
+//         type: CARD_TOGGLE_FAILURE,
+//         error
+//     };
+// }
+
+// export function requestCardToggle(form) {
+//     return (dispatch) => {
+        
+//         const token = localStorage.getItem("token");
+//         const myHeaders = new Headers({
+//             'Content-Type': 'application/json'
+//         });
+
+//         const _options = {
+//             headers: myHeaders,
+//             method: 'post',
+//             body: JSON.stringify(form)
+//         }
+//         return fetch(`/api/cards/new?token=${token}`, _options)
+//             .then((response) => {
+//                 if (!response.ok) {
+//                     throw response;
+//                 }
+//                 return response.json();
+//             })
+//             .then((json) => {
+//                 console.log("cards creation success json", json);
+//                 dispatch(cardToggleSuccess(json.card));
+//             })
+//             .catch((err) => {
+//                 console.log("dispatch cards creation error", err);
+//                 dispatch(cardToggleFailure(`Error: ${err.status} - ${err.statusText}`));
+//             });
+
+//     };
+// }
+
+
+
+export const CARD_UPDATE_SUCCESS = "CARD_UPDATE_SUCCESS";
+export const CARD_UPDATE_FAILURE = "CARD_UPDATE_FAILURE";
+
+export function cardUpdateSuccess(data) {
     return {
-        type: CARD_TOGGLE_SUCCESS,
+        type: CARD_UPDATE_SUCCESS,
         data
     };
 }
-export function cardToggleFailure(error) {
+export function cardUpdateFailure(error) {
     return {
-        type: CARD_TOGGLE_FAILURE,
+        type: CARD_UPDATE_FAILURE,
         error
     };
 }
 
-export function requestCardToggle(form) {
+export function requestCardUpdate(form, token, cardId) {
     return (dispatch) => {
         
-        const token = localStorage.getItem("token");
+        //const token = localStorage.getItem("token");
         const myHeaders = new Headers({
             'Content-Type': 'application/json'
         });
@@ -179,7 +229,7 @@ export function requestCardToggle(form) {
             method: 'post',
             body: JSON.stringify(form)
         }
-        return fetch(`/api/cards/new?token=${token}`, _options)
+        return fetch(`/api/cards/${cardId}?token=${token}&_method=PUT`, _options)
             .then((response) => {
                 if (!response.ok) {
                     throw response;
@@ -187,16 +237,17 @@ export function requestCardToggle(form) {
                 return response.json();
             })
             .then((json) => {
-                console.log("cards creation success json", json);
-                dispatch(cardToggleSuccess(json.card));
+                console.log("cards update success json", json);
+                dispatch(cardUpdateSuccess(json.card));
             })
             .catch((err) => {
-                console.log("dispatch cards creation error", err);
-                dispatch(cardToggleFailure(`Error: ${err.status} - ${err.statusText}`));
+                console.log("dispatch update creation error", err);
+                dispatch(cardUpdateFailure(`Error: ${err.status} - ${err.statusText}`));
             });
 
     };
 }
+
 
 
 export const BOARD_REMOVAL_SUCCESS = "BOARD_REMOVAL_SUCCESS";
@@ -245,6 +296,14 @@ export function requestBoardRemoval(boardId, token) {
 
     };
 }
+
+
+
+
+
+
+
+
 
 export function requestBoardsSuccess(data) {
     return {

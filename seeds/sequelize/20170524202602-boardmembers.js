@@ -23,7 +23,7 @@ module.exports = {
             boardmembers.push(boardmember);
         }
         //then randomize again
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 40; i++) {
             let boardmember = {
                 member_id: Math.floor(Math.random() * 10 + 1),
                 board_id: Math.floor(Math.random() * 20 + 1),

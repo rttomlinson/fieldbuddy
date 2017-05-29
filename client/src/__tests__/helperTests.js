@@ -1,4 +1,4 @@
-import {findListByListId} from '../helpers';
+import * as helpers from '../helpers';
 
 const mockedData = [
     {
@@ -100,14 +100,27 @@ it("finds the correct list based on list id", function(){
                 ]
             };
             
-    expect(findListByListId(listId, mockedData)).toEqual(expectedValue);
+    expect(helpers.findListByListId(listId, mockedData)).toEqual(expectedValue);
 
 });
 it("returns -2 if boards is an empty array", function(){
-    expect(findListByListId(12, [])).toEqual(-2);
+    expect(helpers.findListByListId(12, [])).toEqual(-2);
 })
 it("if a listId that is requested does not exist, return -1", function(){
-    expect(findListByListId(48358485, mockedData)).toEqual(-1);
+    expect(helpers.findListByListId(48358485, mockedData)).toEqual(-1);
+})
+it("finds a card by cardId", function() {
+    const cardId = 354;
+    const expectedValue = {
+                        list_id: 91,
+                        id: 354
+                    };
+    expect(helpers.findCardByCardId(cardId, mockedData)).toEqual(expectedValue);
+});
+it("finds card path by cardId", function(){
+    const cardId = 354;
+    const expectedValue = "2:1:0";
+    expect(helpers.findCardPathById(cardId, mockedData)).toEqual(expectedValue);
 })
 
 

@@ -56,51 +56,62 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
                 });
             });
     });
-    
+
     router.get('/boards', (req, res, next) => {
         console.log("trying to get boards data");
         Board.findAll({
-            include: [{
-                model: List,
-                include: [{
-                    model: Card
+                include: [ {
+                    model: Boardmember,
+                    include: [{
+                        model: User
+                    }]
+                },{
+                    model: List,
+                    include: [{
+                        model: Card
+                    }]
                 }]
-            }]
-        })
-        .then((boards) => {
-            //scrub the tokens
-            //make token virtual or something
-            console.log("got the boards data!");
-            res.status(200).json([...boards]);
-        })
-        .catch((error) => {
-            //set error status and message
-            console.log("error occurered when fetching data");
-            res.json({error});
-        });
+            })
+            .then((boards) => {
+                //scrub the tokens
+                //make token virtual or something
+                console.log("got the boards data!");
+                res.status(200).json([...boards]);
+            })
+            .catch((error) => {
+                //set error status and message
+                console.log("error occurered when fetching data");
+                res.json({
+                    error
+                });
+            });
     });
-    
+
     //delete a board
     router.delete('/boards', (req, res, next) => {
         let boardId = req.body.boardId;
         Board.destroy({
-                where: { id: boardId },
+                where: {
+                    id: boardId
+                },
                 individualHooks: true
-        })
-        .then(() => {
-            res.status(204).json({boardId});
-        });
+            })
+            .then(() => {
+                res.status(204).json({
+                    boardId
+                });
+            });
     });
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     //--------------------------
     // lists
     //--------------------------
-    
+
     router.post('/lists/new', (req, res, next) => {
         //get board name
 
@@ -112,11 +123,11 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
         //Create a new board instance
         sequelize.transaction((t) => {
                 return List.create({
-                        board_id: boardId,
-                        name: listName
-                    }, {
-                        transaction: t
-                    })
+                    board_id: boardId,
+                    name: listName
+                }, {
+                    transaction: t
+                })
 
             })
             .then((list) => {
@@ -140,27 +151,58 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
                 });
             });
     });
-    
+
     router.get('/lists', (req, res, next) => {
         List.findAll({
-            include: [{
-                model: Card
-            }]
-        })
-        .then((lists) => {
-            res.status(200).json([...lists]);
-        })
-        .catch((error) => {
-            //set error status and message
-            console.log("error occurered when fetching data");
-            res.json({error});
-        });
+                include: [{
+                    model: Card
+                }]
+            })
+            .then((lists) => {
+                res.status(200).json([...lists]);
+            })
+            .catch((error) => {
+                //set error status and message
+                console.log("error occurered when fetching data");
+                res.json({
+                    error
+                });
+            });
     });
-    
+
     //--------------------------
-    // lists
+    // cards
     //--------------------------
-    
+    router.put('/cards/:cardId', (req, res, next) => {
+        let {
+            cardId
+        } = req.params;
+        let restOfFields = Object.assign({}, req.body);
+        delete restOfFields.cardId;
+
+        let updateFields = Object.keys(restOfFields);
+        let fieldsToUpdate = {};
+        updateFields.forEach((field) => {
+            fieldsToUpdate[field] = restOfFields[field];
+        });
+
+        Card.update(fieldsToUpdate, {
+                where: {
+                    id: cardId
+                },
+                returning: true
+            })
+            .then(results => {
+                let updatedCard = results[1][0];
+                res.status(200).json({
+                    card: updatedCard
+                });
+            })
+            .catch(next);
+    });
+
+
+
     router.post('/cards/new', (req, res, next) => {
         //get cards name
 
@@ -171,12 +213,12 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
         //Create a new board instance
         sequelize.transaction((t) => {
                 return Card.create({
-                        list_id: listId,
-                        title: cardName,
-                        description: description
-                    }, {
-                        transaction: t
-                    });
+                    list_id: listId,
+                    title: cardName,
+                    description: description
+                }, {
+                    transaction: t
+                });
 
             })
             // .then((card) => {
@@ -199,44 +241,50 @@ module.exports = (User, List, Card, Board, Boardmember, sequelize) => {
                 });
             });
     });
-    
+
     router.get('/cards', (req, res, next) => {
         Card.findAll({
-            // include: [{
-            //     model: Activity
-            // }]
-        })
-        .then((cards) => {
-            res.status(200).json([...cards]);
-        })
-        .catch((error) => {
-            //set error status and message
-            console.log("error occurered when fetching data");
-            res.json({error});
-        });
+                // include: [{
+                //     model: Activity
+                // }]
+            })
+            .then((cards) => {
+                res.status(200).json([...cards]);
+            })
+            .catch((error) => {
+                //set error status and message
+                console.log("error occurered when fetching data");
+                res.json({
+                    error
+                });
+            });
     });
-    
-    
-    
-    
+
+
+
+
     //------------------------------
     //Users routes
     //------------------------------
     router.get('/users', (req, res, next) => {
         User.findAll({})
-        .then((users) => {
-            //scrub the tokens
-            //make token virtual or something
-            res.status(200).json({users});
-        })
-        .catch((error) => {
-            //set error status and message
-            console.log("error occurered when fetching data");
-            res.json({error});
-        });
+            .then((users) => {
+                //scrub the tokens
+                //make token virtual or something
+                res.status(200).json({
+                    users
+                });
+            })
+            .catch((error) => {
+                //set error status and message
+                console.log("error occurered when fetching data");
+                res.json({
+                    error
+                });
+            });
     });
-    
-    
-    
+
+
+
     return router;
 };

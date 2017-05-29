@@ -37,7 +37,7 @@ export function requestUserAuthorization(form) {
             .then((json) => {
                 console.log("json", json);
                 localStorage.setItem("token", json.token);
-                window.location = '/dashboard/1';
+                window.location = '/dashboard/boards';
                 console.log("called authorize user");
             })
             .catch((err) => {

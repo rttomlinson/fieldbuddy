@@ -11,10 +11,11 @@ import './index.css';
 import authReducer from './reducers/authReducer';
 import boardsReducer from './reducers/boardsReducer';
 import listsReducer from './reducers/listsReducer';
+import usersReducer from './reducers/usersReducer';
 
 
 
-const store = createStore(combineReducers({auth: authReducer, boards: boardsReducer}), compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const store = createStore(combineReducers({auth: authReducer, boards: boardsReducer, users: usersReducer}), compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 let unsubscribe = store.subscribe(() => {
     console.log("current store state", store.getState());
 })
