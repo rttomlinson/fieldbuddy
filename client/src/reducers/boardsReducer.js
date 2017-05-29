@@ -8,7 +8,9 @@ import {
     LIST_CREATION_SUCCESS,
     CARD_CREATION_SUCCESS,
     CARD_CREATION_FAILURE,
-    CARD_UPDATE_SUCCESS
+    CARD_UPDATE_SUCCESS,
+    BOARDMEMBER_ADD_SUCCESS,
+    BOARDMEMBER_REMOVE_SUCCESS
 }
 from '../actions/boardsActions';
 import * as helpers from '../helpers';
@@ -21,7 +23,7 @@ const INITIAL_STATE = {
 };
 
 export default function boardsReducer(state = INITIAL_STATE, action) {
-    let board, boardIndex, boardList, listCards, listWithCardIndex, listIndex, cardIndex, cardId, Boards;
+    let board, boardIndex, boardList, listCards, listWithCardIndex, listIndex, cardIndex, cardId, Boards, boardMembers, boardMemberIndex;
     switch (action.type) {
         case REQUEST_BOARDS_SUCCESS:
             return {
@@ -217,6 +219,78 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
                 ...state,
                 error: action.error
             };
+        case BOARDMEMBER_ADD_SUCCESS:
+            console.log("adding new board member");
+            Boards = state.data;
+            boardIndex = state.data.findIndex((board) => {
+                return board.id == action.data.board_id;
+            });
+            if (boardIndex === -1) {
+                //should probably log an error?
+                return state;
+            }
+            //create new boardmembers array
+            boardMembers = [
+                    ...Boards[boardIndex].Boardmembers,
+                    action.data
+            ];
+            //create new board with new Boardmembers array
+            board = {
+                ...Boards[boardIndex],
+                Boardmembers: boardMembers
+            };
+            //create new boards array with slice, order is not necessarily important at this time
+            Boards = [
+                ...Boards.slice(0, boardIndex),
+                board,
+                ...Boards.slice(boardIndex + 1)
+            ];
+            //replace the data prop with the new Boards array
+            return {
+                ...state,
+                data: Boards
+            };
+         case BOARDMEMBER_REMOVE_SUCCESS:
+            console.log("removing board member");
+            Boards = state.data;
+            boardIndex = state.data.findIndex((board) => {
+                return board.id == action.data.boardId;
+            });
+            if (boardIndex === -1) {
+                
+                //should probably log an error?
+                //board of this id does not exist
+                return state;
+            }
+            boardMemberIndex = Boards[boardIndex].Boardmembers.findIndex((boardMember) => {
+                return boardMember.member_id == action.data.memberId;
+            });
+            if (boardMemberIndex === -1) {
+                //should probably log an error?
+                //boardMember does not exist at this board
+                return state;
+            }
+            //create new boardmembers array
+            boardMembers = [
+                    ...Boards[boardIndex].Boardmembers.slice(0, boardMemberIndex),
+                    ...Boards[boardIndex].Boardmembers.slice(boardMemberIndex + 1)
+            ];
+            //create new board with new Boardmembers array
+            board = {
+                ...Boards[boardIndex],
+                Boardmembers: boardMembers
+            };
+            //create new boards array with slice, order is not necessarily important at this time
+            Boards = [
+                ...Boards.slice(0, boardIndex),
+                board,
+                ...Boards.slice(boardIndex + 1)
+            ];
+            //replace the data prop with the new Boards array
+            return {
+                ...state,
+                data: Boards
+            };   
         default:
             return state;
     }
