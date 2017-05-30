@@ -4,7 +4,7 @@ import serialize from 'form-serialize';
 import {withRouter} from 'react-router-dom';
 import {requestUserAuthorization} from '../actions/authActions';
 import {connect} from 'react-redux';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 
 const inputFields = [{type: "text", name:"email", label:"Email"}, {type:"password", name:"password", label:"Password"}];

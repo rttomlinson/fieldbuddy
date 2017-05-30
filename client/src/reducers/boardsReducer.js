@@ -67,7 +67,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             };
         case LIST_CREATION_SUCCESS:
             boardIndex = state.data.findIndex((board) => {
-                return board.id == action.data.board_id;
+                return board.id == action.data.boardId;
             });
             board = {
                 ...state.data[boardIndex]
@@ -138,7 +138,10 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             Boards = state.data;
             const cardPath = helpers.findCardPathById(cardId, Boards);
             [boardIndex, listIndex, cardIndex] = cardPath.split(':');
-            
+            //Cast each to numbers
+            boardIndex = +boardIndex;
+            listIndex = +listIndex;
+            cardIndex = +cardIndex;
             let newCards = [
                 ...Boards[boardIndex].Lists[listIndex].Cards.slice(0, cardIndex),
                 action.data,
@@ -157,7 +160,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
                 ...Boards[boardIndex],
                 Lists: newLists
             };
-            return {
+            let stateToReturn = {
                 ...state,
                 data: [
                     ...Boards.slice(0, boardIndex),
@@ -165,6 +168,8 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
                     ...Boards.slice(boardIndex + 1)
                 ]
             };
+            console.log("state to be returned", stateToReturn);
+            return stateToReturn;
 
         // case CARD_TOGGLE_SUCCESS:
         //     cardId = action.data;
@@ -223,7 +228,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             console.log("adding new board member");
             Boards = state.data;
             boardIndex = state.data.findIndex((board) => {
-                return board.id == action.data.board_id;
+                return board.id == action.data.boardId;
             });
             if (boardIndex === -1) {
                 //should probably log an error?
@@ -263,7 +268,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
                 return state;
             }
             boardMemberIndex = Boards[boardIndex].Boardmembers.findIndex((boardMember) => {
-                return boardMember.member_id == action.data.memberId;
+                return boardMember.memberId == action.data.memberId;
             });
             if (boardMemberIndex === -1) {
                 //should probably log an error?

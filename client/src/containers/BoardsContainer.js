@@ -7,23 +7,29 @@ import {
     connect
 }
 from 'react-redux';
-import {fetchBoards} from '../actions/boardsActions';
 import {
-    CardDeck,
-    Row
+    Row,
+    Col
 }
 from 'reactstrap';
-import NewBoardForm from '../components/NewBoardForm';
-import BoardSelector from '../components/BoardSelector';
-import {withRouter} from 'react-router-dom';
+
+import {
+    withRouter
+}
+from 'react-router-dom';
 import Board from '../components/Board';
 import RequireAuthContainer from './RequireAuthContainer';
+import DashboardContainer from './DashboardContainer';
+// import { requestAddBoardmember, requestRemoveBoardmember} from '../actions/boardsActions';
+
 
 
 const makeBoards = (boards) => {
     return boards.map((board) => {
         return (
-            <Board key={board.id} {...board}/>
+            <Col key={board.id} xs={12} sm={6} md={6}> 
+                <Board {...board}/>
+            </Col>
         );
     });
 
@@ -32,56 +38,53 @@ const makeBoards = (boards) => {
 class BoardsContainer extends Component {
 
     componentDidMount() {
-        console.log("dashboard did mount");
-        //fetch initial data
-        this.props.fetchBoards();
+        console.log("boardscontainer did mount");
     }
-    
-    
+
+
     render() {
-        const {boards, currentBoard } = this.props;
-        if (boards.length === 0){
+        const {
+            boards
+        } = this.props;
+        if (boards.length === 0) {
             console.log("empty board list, probably needs to load");
             return null;
         }
         return (
-            <div className="container">
-                <NewBoardForm buttonLabel="+Add board"/>
-                <BoardSelector boards={boards} currentBoard={currentBoard}/>
-                <Row>
-                    {makeBoards(boards)}
-                </Row>
-            </div>
+            <Row>
+                {makeBoards(boards)}
+            </Row>
         );
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    
+
     return {
-        boards: state.boards.data,
-        currentBoard: state.boards.data.find((board) => {
-            return board.id === ownProps.match.params.boardId;
-        })
+        boards: state.boards.data
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchBoards: () => {
-            dispatch(fetchBoards());
-        }
-    };
-}
-
+// function mapDispatchToProps(dispatch, ownProps) {
+//     return {
+//         requestRemoveBoardmember: (boardId, memberId) => {
+//             dispatch(requestRemoveBoardmember(boardId, memberId));
+//         },
+//         requestAddBoardmember: (boardId, memberId) => {
+//             dispatch(requestAddBoardmember(boardId, memberId));
+//         }
+//     };
+// }
 
 const WrappedBoardsContainer = () => {
-    return(
+    return (
         <RequireAuthContainer>
-            <WiredBoardsContainer />
+            <DashboardContainer>
+                <WiredBoardsContainer />
+            </DashboardContainer>
         </RequireAuthContainer>
     );
 };
 
-let WiredBoardsContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(BoardsContainer));
-export default WrappedBoardsContainer; 
+let WiredBoardsContainer = withRouter(connect(mapStateToProps)(BoardsContainer));
+export default WrappedBoardsContainer;

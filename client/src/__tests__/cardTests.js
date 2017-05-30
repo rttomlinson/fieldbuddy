@@ -65,8 +65,11 @@ it('toggles the card at an id', function() {
         }]
     };
     const action = {
-        type: CARD_TOGGLE_SUCCESS,
-        data: 1
+        type: CARD_UPDATE_SUCCESS,
+        data: {
+            id: 1,
+            completed: false,
+        }
     };
     const finalState = {
         error:null,

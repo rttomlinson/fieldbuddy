@@ -3,14 +3,12 @@ import React, {
 }
 from 'react';
 import 'isomorphic-fetch';
-import serialize from 'form-serialize';
 import {
     Button,
     Form,
     FormGroup,
     Label,
-    Input,
-    FormText
+    Input
 }
 from 'reactstrap';
 

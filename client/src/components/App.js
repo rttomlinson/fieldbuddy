@@ -11,7 +11,7 @@ import {
 from 'react-router-dom';
 import LoginForm from './LoginForm';
 import BoardsContainer from '../containers/BoardsContainer';
-import DashboardContainer from '../containers/DashboardContainer';
+import BoardContainer from '../containers/BoardContainer';
 import ListsContainer from '../containers/ListsContainer';
 import Navbar from './Navbar';
 
@@ -29,7 +29,7 @@ class App extends Component {
                             <Route path="/login" component={LoginForm} />
                             <Redirect exact from="/" to="/dashboard/boards"/>
                             <Route path="/dashboard/boards/:boardId/lists/:listId" component={ListsContainer}/>
-                            <Route path="/dashboard/boards/:boardId" component={DashboardContainer}/>
+                            <Route path="/dashboard/boards/:boardId" component={BoardContainer}/>
                             <Route exact path="/dashboard/boards" component={BoardsContainer}/>
                             <Route render={() => {
                                     return (<div>Page not found</div>);

@@ -52,7 +52,7 @@ const CardModalEditBody = ({
 }) => {
     return (
         <ModalBody>
-            <Form onSubmit={(e) => {
+            <Form id="description-update" onSubmit={(e) => {
                 e.preventDefault();
                 let form = serialize(e.target, {hash:true});
                 requestCardUpdate(form);
@@ -62,7 +62,7 @@ const CardModalEditBody = ({
                   <Label for="description">Description</Label>
                   <Input type="textarea" name="description" id="description" value={description} onChange={onChange}/>
                 </FormGroup>
-                <Button type="submit">Save changes</Button>
+                <Button form="description-update" type="submit">Save changes</Button>
                 <Button onClick={toggleEditDescription}>Preview</Button>
                 <Button onClick={restoreOriginalDescriptionAndCloseEditMode}>Cancel</Button>
             </Form>
@@ -133,7 +133,6 @@ class CardModal extends React.Component {
     }
 
     updateStateDescription = (e) => {
-        console.log("on input change", e);
         this.setState({
             scopedDescription: e.target.value
         });

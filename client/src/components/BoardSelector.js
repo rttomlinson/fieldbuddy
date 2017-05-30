@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
@@ -16,10 +16,10 @@ class BoardSelector extends React.Component {
   render() {
       const {changeBoard, boards, currentBoard} = this.props;
         return (
-          <Form onChange={changeBoard}>
+          <Form id="board-selection">
             <FormGroup>
               <Label for="board-select">Select a boards:</Label>
-              <Input type="select" name="boardSelect" id="board-select" value={currentBoard ? currentBoard.id : void 0}>
+              <Input onChange={changeBoard} type="select" name="boardSelect" id="board-select" value={currentBoard ? currentBoard.id : void 0}>
                 {makeOptions(boards)}
               </Input>
             </FormGroup>

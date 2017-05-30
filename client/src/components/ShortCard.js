@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Card, CardText, CardBlock,
+import { Card, CardBlock,
   CardTitle, CardSubtitle } from 'reactstrap';
-import CardModal from './CardModal';
 
 
 const statusMessage = (completed) => {
@@ -11,20 +10,18 @@ const statusMessage = (completed) => {
 
 
 
-const StrapCard = (props) => {
+const ShortCard = (props) => {
     const { card } = props;
   return (
       <Card>
         <CardBlock>
           <CardTitle>Card: {card.title}</CardTitle>
           <CardSubtitle>{statusMessage(card.completed)}</CardSubtitle>
-          <CardText>{card.description}</CardText>
-          <CardModal buttonLabel="Open" {...card}/>
         </CardBlock>
       </Card>
   );
 };
 
-export default StrapCard;
+export default ShortCard;
 
 

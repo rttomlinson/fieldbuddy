@@ -62,9 +62,9 @@ export default BoardPermissions;
 function generateAuthorizedUsers(boardMembers, requestRemoveBoardmember) {
     return boardMembers.map((boardMember) => {
         return (
-            <div key={boardMember.member_id}>
+            <div key={boardMember.memberId}>
                 <input  type="text" disabled={true} value={boardMember.User.username}/>{" "}
-                <Button outline color="danger" size="sm" onClick={() => requestRemoveBoardmember(boardMember.board_id, boardMember.member_id)}>X</Button>
+                <Button outline color="danger" size="sm" onClick={() => requestRemoveBoardmember(boardMember.boardId, boardMember.memberId)}>X</Button>
             </div>
         );
     });
@@ -101,7 +101,7 @@ function generateAvailableUsers(allUsers, currentBoard, requestAddBoardmember) {
                 {optionsGenerator(unauthorizedUsers)}
               </Input>
             </FormGroup>
-            <Button type="submit">Authorize User</Button>
+            <Button form="user-permissions-add" type="submit">Authorize User</Button>
         </Form>
     );
 }

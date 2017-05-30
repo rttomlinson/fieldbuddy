@@ -28,6 +28,7 @@ const List = (props) => {
           <CardSubtitle>List subtitle</CardSubtitle>
           <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
           <NewCardForm buttonLabel="Add new card" listId={id}/>
+          <Button onClick={() => {console.log("List deletion not yet implemented")}}>Delete this list</Button>
         </CardBlock>
         <CardBlock>
             {makeCards(Cards)}

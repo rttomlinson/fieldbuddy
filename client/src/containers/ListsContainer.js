@@ -6,34 +6,19 @@ import {
     connect
 }
 from 'react-redux';
-import Card from '../components/Card';
 import {withRouter, NavLink} from 'react-router-dom';
 import RequireAuthContainer from './RequireAuthContainer';
 import { findListByListId } from '../helpers';
-import {fetchBoards} from '../actions/boardsActions';
 import List from '../components/List';
-
-
-const makeCards = (cards) => {
-    return cards.map((card) => {
-        return (
-            <Card key={card.id} {...card}/>
-        );
-    });
-
-};
+import DashboardContainer from './DashboardContainer';
+import serialize from 'form-serialize';
+import { requestCardCreation } from '../actions/boardsActions';
 
 class ListsContainer extends Component {
 
     componentDidMount() {
-        console.log("list did mount");
-        //check to see if data has been fetched or is fetching..?
-        console.log("all props from state", this.props);
-        if (this.props.boards.length === 0) {
-            this.props.fetchBoards();
-        }
+        console.log("listsContainer did mount");
     }
-    
     
     render() {
         const { selectedList, boardId } = this.props;
@@ -61,7 +46,6 @@ class ListsContainer extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log("ownProps", ownProps, state);
     const selectedList = findListByListId(ownProps.match.params.listId, state.boards.data);
     return {
         boards: state.boards.data,
@@ -72,22 +56,25 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        fetchBoards: () => {
-            dispatch(fetchBoards());
+        requestCardCreation: (e) => {
+            e.preventDefault();
+            const form = serialize(e.target, {
+                hash: true
+            });
+            dispatch(requestCardCreation(form));
         }
     };
 }
 
-
-
-
-const WiredListsContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(ListsContainer));
 const WrappedListsContainer = () => {
     return (
         <RequireAuthContainer>
-            <WiredListsContainer />
+            <DashboardContainer>
+                <WiredListsContainer />
+            </DashboardContainer>
         </RequireAuthContainer>
-        
     );
 };
+
+let WiredListsContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(ListsContainer));
 export default WrappedListsContainer;
