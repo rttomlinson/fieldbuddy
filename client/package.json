@@ -1,0 +1,40 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "https://vikingcodeschool-rttomlinson.c9users.io:8081",
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "form-serialize": "^0.7.1",
+    "isomorphic-fetch": "^2.2.1",
+    "material-ui": "^0.18.1",
+    "morgan": "^1.8.2",
+    "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-addons-transition-group": "^15.5.2",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "reactstrap": "^4.6.2",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "deep-freeze": "0.0.1",
+    "fetch-mock": "^5.11.0",
+    "isomorphic-fetch": "^2.2.1",
+    "morgan": "^1.8.1",
+    "react-scripts": "1.0.5",
+    "redux-mock-store": "^1.2.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "engines": {
+    "node": "^7.10.0"
+  }
+}

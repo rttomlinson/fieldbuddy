@@ -1,0 +1,57 @@
+{
+  "name": "project_djello",
+  "version": "1.0.0",
+  "description": "Inventory Management",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "faker": "^4.1.0",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.2.2",
+    "pg-hstore": "^2.3.2",
+    "react": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^3.30.4",
+    "sequelize-cli": "^2.7.0",
+    "shortid": "^2.2.8",
+    "underscore": "^1.8.3",
+    "wagner-core": "^0.2.0"
+  },
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start-dev": "npm run nodemon server.js",
+    "nodemon": "./node_modules/nodemon/bin/nodemon.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sql": "node_modules/sequelize-cli/bin/sequelize",
+    "sql:migrate:undo": "npm run sql db:migrate:undo:all",
+    "sql:migrate": "npm run sql db:migrate",
+    "sql:seed:undo": "npm run sql db:seed:undo:all",
+    "sql:seed": "npm run sql db:seed:all",
+    "sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed:undo && npm run sql:seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rttomlinson/project_djello.git"
+  },
+  "author": "Renzo Tomlinson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rttomlinson/project_djello/issues"
+  },
+  "homepage": "https://github.com/rttomlinson/project_djello#readme",
+  "engines": {
+    "node": "7.10.0"
+  }
+}
