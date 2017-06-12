@@ -4,25 +4,25 @@
 module.exports = function(sequelize, DataTypes) {
     var Board = sequelize.define('Board', {
         name: DataTypes.STRING,
-        owner_id: DataTypes.INTEGER
+        ownerId: DataTypes.INTEGER
     }, {
         classMethods: {
             associate: function(models) {
                 // associations can be defined here
                 Board.belongsTo(models.User, {
-                    foreignKey: "owner_id"
+                    foreignKey: "ownerId"
                 });
                 Board.hasMany(models.Boardmember, {
-                    foreignKey: "board_id"
+                    foreignKey: "boardId"
                 });
                 Board.belongsToMany(models.User, {
                     through: models.Boardmember,
                     as: 'UserBoard',
-                    foreignKey: 'board_id',
-                    otherKey: 'member_id'
+                    foreignKey: 'boardId',
+                    otherKey: 'memberId'
                 });
                 Board.hasMany(models.List, {
-                    foreignKey: "board_id"
+                    foreignKey: "boardId"
                 });
             }
         }
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
         console.log("board deleted", board);
         let List = sequelize.models.List;
         List.destroy({
-            where: { board_id: board.id },
+            where: { boardId: board.id },
             individualHooks: true
         });
     });

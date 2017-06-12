@@ -13,7 +13,9 @@ import RequireAuthContainer from './RequireAuthContainer';
 import BoardPermissions from '../components/BoardPermissions';
 import {
     Row,
-    Col
+    Col,
+    Nav,
+    NavItem
 }
 from 'reactstrap';
 import DashboardContainer from './DashboardContainer';
@@ -24,7 +26,7 @@ import ShortList from '../components/ShortList';
 const makeLists = (lists) => {
     return lists.map((list) => {
         return (
-            <Col key={list.id} xs={12} sm={6} md={6}> 
+            <Col key={list.id} xs={12} sm={4} md={3}> 
                 <ShortList {...list}/>
             </Col>
         );
@@ -51,14 +53,29 @@ class BoardContainer extends Component {
             console.log("empty board list, probably needs to load");
             return null;
         }
+        if (currentBoard.Lists.length === 0) {
+            return (
+            <div className="text-center" style={{width: "100%", height: "100%"}}>
+                <p>You currently have no animals!</p>
+                <NewListForm buttonLabel={"Add one!"} boardId={currentBoard.id}/>
+            </div>);
+            
+            
+        }
         return (
-            <Row>
-                <Col xs={12}> 
-                    <NewListForm buttonLabel={"Add new list"} boardId={currentBoard.id}></NewListForm>
-                    <BoardPermissions requestAddBoardmember={requestAddBoardmember} requestRemoveBoardmember={requestRemoveBoardmember} currentBoard={currentBoard} users={users} buttonLabel="Manage Permissions"/>
-                </Col>
-                {makeLists(currentBoard.Lists)}
-            </Row>
+            <div>
+                <Nav className="flex-end" style={{paddingBottom: 10, paddingTop: 10}}> 
+                        <NavItem style={{paddingRight: 5}}>
+                            <NewListForm buttonLabel={"Add new animal"} boardId={currentBoard.id}></NewListForm>
+                        </NavItem>
+                        <NavItem>
+                            <BoardPermissions requestAddBoardmember={requestAddBoardmember} requestRemoveBoardmember={requestRemoveBoardmember} currentBoard={currentBoard} users={users} buttonLabel="Manage Permissions"/>
+                        </NavItem>
+                </Nav>
+                <Row>
+                    {makeLists(currentBoard.Lists)}
+                </Row>
+            </div>
         );
     }
 }

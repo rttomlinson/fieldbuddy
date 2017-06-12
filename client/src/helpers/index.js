@@ -82,6 +82,10 @@ boards: [
 
 
 export function findListByListId(listId, boards) {
+    //if not listId return 0
+    if (!listId){
+        return 0;
+    }
     if (boards.length === 0) {
         //if boards is an empty array then we are probably waiting on data
         //it could also be that a user navigated to a lists page while no boards exist yet

@@ -322,6 +322,7 @@ export function cardUpdateFailure(error) {
 
 export function requestCardUpdate(form, token, cardId) {
     return (dispatch) => {
+        console.log("calling requestCardUpdate");
         
         //const token = localStorage.getItem("token");
         const myHeaders = new Headers({
@@ -345,7 +346,7 @@ export function requestCardUpdate(form, token, cardId) {
                 dispatch(cardUpdateSuccess(json.card));
             })
             .catch((err) => {
-                console.log("dispatch update creation error", err);
+                console.log("dispatch update card error", err);
                 dispatch(cardUpdateFailure(`Error: ${err.status} - ${err.statusText}`));
             });
 

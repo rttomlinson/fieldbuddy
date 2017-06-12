@@ -18,7 +18,7 @@ module.exports = {
     let lists = [];
     for (let i = 0; i < 50; i++){
         let list = {
-            board_id: Math.floor(Math.random() * 20 + 1),
+            boardId: Math.floor(Math.random() * 20 + 1),
             name: faker.company.companyName(),
         };
         lists.push(list);

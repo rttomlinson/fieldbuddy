@@ -18,7 +18,7 @@ class BoardSelector extends React.Component {
         return (
           <Form id="board-selection">
             <FormGroup>
-              <Label for="board-select">Select a boards:</Label>
+              <Label for="board-select">Quick switch:</Label>
               <Input onChange={changeBoard} type="select" name="boardSelect" id="board-select" value={currentBoard ? currentBoard.id : void 0}>
                 {makeOptions(boards)}
               </Input>

@@ -98,7 +98,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
 
             boardIndex = state.data.findIndex((board) => {
                 listWithCardIndex = board.Lists.findIndex((list) => {
-                    return list.id == action.data.list_id;
+                    return list.id == action.data.listId;
                 });
                 return listWithCardIndex > -1;
             });
@@ -142,6 +142,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             boardIndex = +boardIndex;
             listIndex = +listIndex;
             cardIndex = +cardIndex;
+            console.log(boardIndex, listIndex, cardIndex);
             let newCards = [
                 ...Boards[boardIndex].Lists[listIndex].Cards.slice(0, cardIndex),
                 action.data,
@@ -230,6 +231,7 @@ export default function boardsReducer(state = INITIAL_STATE, action) {
             boardIndex = state.data.findIndex((board) => {
                 return board.id == action.data.boardId;
             });
+            console.log("boardIndex?", boardIndex);
             if (boardIndex === -1) {
                 //should probably log an error?
                 return state;

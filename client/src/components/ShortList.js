@@ -1,18 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardText, CardBlock,
-  CardTitle, CardSubtitle } from 'reactstrap';
+  CardTitle, CardSubtitle, CardImg } from 'reactstrap';
 
 
 const List = (props) => {
-    const { board_id, name, id } = props;
+    const { boardId, name, id } = props;
     return (
-        <Link to={`${board_id}/lists/${id}`}>
+        <Link to={`${boardId}/lists/${id}`}>
             <Card>
+                <CardImg style={{padding: 10}}top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=150%C3%97150&w=150&h=150" alt="Card image cap" />
                 <CardBlock>
-                    <CardTitle>List: {name}</CardTitle>
-                    <CardSubtitle>List subtitle</CardSubtitle>
-                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    <CardSubtitle>Animal {name}</CardSubtitle>
                 </CardBlock>
             </Card>
         </Link>

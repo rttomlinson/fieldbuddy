@@ -36,7 +36,12 @@ class DjelloNavbar extends React.Component {
       <div>
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavLink style={{fontSize:"1.4em", textDecoration: "none"}} to="/dashboard/boards">Djello</NavLink>
+          <NavLink style={{fontSize:"1.4em", textDecoration: "none"}} to="/dashboard/boards"><span>FieldBuddy</span></NavLink>
+            <div id="test-mode-login" style={{position: "absolute", top: 50}}>
+                <p>Test mode:</p>
+                <p>email- admin1@admin.com</p>
+                <p>password- admin</p>
+            </div>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
-      list_id: {
+      listId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

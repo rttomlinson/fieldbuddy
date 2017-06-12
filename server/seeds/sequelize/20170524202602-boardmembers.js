@@ -17,16 +17,16 @@ module.exports = {
         //first make sure each board has at least 1 board member
         for (let i = 1; i <= 20; i++) {
             let boardmember = {
-                member_id: Math.floor(Math.random() * 10 + 1),
-                board_id: i,
+                memberId: Math.floor(Math.random() * 10 + 1),
+                boardId: i,
             };
             boardmembers.push(boardmember);
         }
         //then randomize again
         for (let i = 0; i < 40; i++) {
             let boardmember = {
-                member_id: Math.floor(Math.random() * 10 + 1),
-                board_id: Math.floor(Math.random() * 20 + 1),
+                memberId: Math.floor(Math.random() * 10 + 1),
+                boardId: Math.floor(Math.random() * 20 + 1),
             };
             boardmembers.push(boardmember);
         }

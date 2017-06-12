@@ -62,9 +62,9 @@ export default BoardPermissions;
 function generateAuthorizedUsers(boardMembers, requestRemoveBoardmember) {
     return boardMembers.map((boardMember) => {
         return (
-            <div key={boardMember.member_id}>
+            <div key={boardMember.memberId}>
                 <input  type="text" disabled={true} value={boardMember.User.username}/>{" "}
-                <Button outline color="danger" size="sm" onClick={() => requestRemoveBoardmember(boardMember.board_id, boardMember.member_id)}>X</Button>
+                <Button outline color="danger" size="sm" onClick={() => requestRemoveBoardmember(boardMember.boardId, boardMember.memberId)}>X</Button>
             </div>
         );
     });
@@ -75,7 +75,7 @@ function generateAvailableUsers(allUsers, currentBoard, requestAddBoardmember) {
     let boardId = currentBoard.id;
     //filter through the users to get the remaining ones
     let authorizedUsersIds = authorizedUsers.reduce((acc, user) => {
-        acc.push(user.member_id);
+        acc.push(user.memberId);
         return acc;
     }, []);
     let unauthorizedUsers = allUsers.filter((user) => {

@@ -7,7 +7,6 @@ import {
     connect
 }
 from 'react-redux';
-// import {fetchCards} from '../actions/listsActions';
 import Card from '../components/Card';
 import {
     CardDeck,
@@ -15,32 +14,11 @@ import {
     Col
 }
 from 'reactstrap';
-import NewCardForm from '../components/NewCardForm';
 // import {withRouter} from 'react-router-dom';
 
-const makeCards = (cards) => {
-    return cards.map((list) => {
-        return (
-            <Row key={list.id}>
-                <Col>
-                    <Card  {...list}/>
-                </Col>
-            </Row>
-        );
-    });
-};
 
+class CardsWrapper extends Component {
 
-
-class CardsContainer extends Component {
-
-    // componentDidMount() {
-    //     console.log("dashboard did mount");
-    //     //fetch initial data
-    //     this.props.fetchCards();
-    // }
-    
-    
     render() {
         const { cards } = this.props;
         console.log("cards, and selectedCard", cards );
@@ -59,7 +37,7 @@ class CardsContainer extends Component {
 //     return {
 //         cards: state.cards.data,
 //         selectedCard,
-//         currentBoard: (selectedCard ? selectedCard.board_id : null)
+//         currentBoard: (selectedCard ? selectedCard.boardId : null)
         
 //     };
 // }
@@ -74,4 +52,4 @@ class CardsContainer extends Component {
 
 
 // export default withRouter(connect(null, mapDispatchToProps)(CardsContainer));
-export default CardsContainer;
+export default CardsWrapper;

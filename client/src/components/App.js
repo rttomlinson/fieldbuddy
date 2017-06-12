@@ -9,7 +9,7 @@ import {
     Redirect
 }
 from 'react-router-dom';
-import LoginForm from './LoginForm';
+import LoginFormContainer from '../containers/LoginFormContainer';
 import BoardsContainer from '../containers/BoardsContainer';
 import BoardContainer from '../containers/BoardContainer';
 import ListsContainer from '../containers/ListsContainer';
@@ -26,7 +26,7 @@ class App extends Component {
                     <div>
                         <Navbar />
                         <Switch>
-                            <Route path="/login" component={LoginForm} />
+                            <Route path="/login" component={LoginFormContainer} />
                             <Redirect exact from="/" to="/dashboard/boards"/>
                             <Route path="/dashboard/boards/:boardId/lists/:listId" component={ListsContainer}/>
                             <Route path="/dashboard/boards/:boardId" component={BoardContainer}/>

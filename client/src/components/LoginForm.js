@@ -1,53 +1,53 @@
-import React, {Component} from 'react';
-import 'isomorphic-fetch';
-import serialize from 'form-serialize';
-import {withRouter} from 'react-router-dom';
-import {requestUserAuthorization} from '../actions/authActions';
-import {connect} from 'react-redux';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import React from 'react';
+import {
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input
+}
+from 'reactstrap';
 
 
-const inputFields = [{type: "text", name:"email", label:"Email"}, {type:"password", name:"password", label:"Password"}];
+const inputFields = [{
+    type: "text",
+    name: "email"
+}, {
+    type: "password",
+    name: "password"
+}];
+
 function makeInputGroup(inputs) {
     return inputs.map((input) => {
         return (
             <FormGroup key={input.name}>
-              <Label for={input.name}>{input.label}</Label>
+              {input.label ? <Label for={input.name}>{input.label}</Label> : null}
               <Input type={input.type} name={input.name} id={input.name} placeholder={input.name} />
             </FormGroup>
         );
     });
-    
-    
+
+
 }
-class LoginForm extends Component{
-    render(){
-        const {requestUserAuthorization} = this.props;
-        return (
-            <Form id="login-form" onSubmit={requestUserAuthorization}>
-                {makeInputGroup(inputFields)}
-                <Button color="primary">Login</Button>
-            </Form>
-        );
-        
+
+const LoginForm = ({onSubmit, show}) => {
+    let classNames = ['login-form'];
+    if (show) {
+        classNames.push('show');
     }
-}
+    classNames = classNames.join(" ");
+    console.log("rendering the login form");
 
-function mapDispatchToProps(dispatch, ownProps){
-    return {
-        requestUserAuthorization: (e) => {
-            e.preventDefault();
-            //get form data
-            const form = serialize(e.target, {
-                hash: true
-            });
-            dispatch(requestUserAuthorization(form))
-            .then((response) => {
-                //this should actually go back to the page it was last on...
-                ownProps.history.push('/dashboard/boards');
-            });
-        }
-    };
-}
+    return (
+        <div className="backdrop">
+            <Form className={classNames} onSubmit={onSubmit}>
+                <h4 style={{paddingBottom: 30}} className="text-center">Sign in to Field Buddy</h4>
+                {makeInputGroup(inputFields)}
+                <Button block color="primary">Login</Button>
+            </Form>
+        </div>
+    );
+};
 
-export default withRouter(connect(null, mapDispatchToProps)(LoginForm));
+
+export default LoginForm;

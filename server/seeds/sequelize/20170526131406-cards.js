@@ -16,7 +16,7 @@ module.exports = {
     let cards = [];
     for (let i = 0; i < 150; i++){
         let card = {
-            list_id: Math.floor(Math.random() * 50 + 1),
+            listId: Math.floor(Math.random() * 50 + 1),
             title: faker.company.companyName(),
             description: faker.lorem.paragraph(),
             completed: false

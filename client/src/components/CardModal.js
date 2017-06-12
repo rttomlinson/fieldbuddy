@@ -27,8 +27,6 @@ import {
 from '../actions/boardsActions';
 
 
-
-
 const CardModalBody = ({
     description,
     toggleEditDescription
@@ -82,13 +80,8 @@ class CardModal extends React.Component {
 
         this.toggle = this.toggle.bind(this);
     }
-    
-    componentDidMount(){
-        console.log("card modal did mount");
-    }
 
     componentWillReceiveProps(nextProps) {
-        console.log("card modal will receive new props");
         if (nextProps.description !== this.props.description) {
             console.log("This description prop is different from the old one!");
             this.setState({
@@ -145,7 +138,8 @@ class CardModal extends React.Component {
             title,
             completed,
             id,
-            requestCardUpdate
+            requestCardUpdate,
+            children
         } = this.props;
         const descriptionBox = this.state.editDescription ? CardModalEditBody({
             onChange: this.updateStateDescription,
@@ -161,7 +155,7 @@ class CardModal extends React.Component {
         }) : CardModalBody({
             description: this.state.scopedDescription,
             toggleEditDescription: this.toggleEditDescription
-        })
+        });
 
 
         return (
@@ -170,6 +164,9 @@ class CardModal extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>{title}</ModalHeader>
           {descriptionBox}
+          <ModalBody>
+            {children}
+          </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={() => requestCardUpdate({completed: !completed}, id)}>{completed ? "Completed" : "In progress"}</Button>{' '}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>

@@ -4,13 +4,13 @@ module.exports = function(sequelize, DataTypes) {
         title: DataTypes.STRING,
         description: DataTypes.TEXT,
         completed: DataTypes.BOOLEAN,
-        list_id: DataTypes.INTEGER
+        listId: DataTypes.INTEGER
     }, {
         classMethods: {
             associate: function(models) {
                 // associations can be defined here
                 Card.belongsTo(models.List, {
-                    foreignKey: "list_id"
+                    foreignKey: "listId"
                 });
                 
                 Card.hasMany(models.Cardmember, {

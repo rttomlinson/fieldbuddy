@@ -2,19 +2,17 @@ import React from 'react';
 
 import { Card, CardText, CardBlock,
   CardTitle, CardSubtitle } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Board = (props) => {
-    const { name, id } = props;
+    const { name, id, description } = props;
   return (
-      <Card>
-        <Link to={`/dashboard/boards/${id}`}>
+      <Card className="boardBoxes">
+        <NavLink to={`/dashboard/boards/${id}`}>
             <CardBlock>
-              <CardTitle>Board: {name}</CardTitle>
-              <CardSubtitle>board subtitle</CardSubtitle>
-              <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+              <CardSubtitle>{name}</CardSubtitle>
             </CardBlock>
-        </Link>
+        </NavLink>
       </Card>
   );
 };

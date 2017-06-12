@@ -1,9 +1,15 @@
 import React from 'react';
 
-import { Card, CardText, CardBlock,
-  CardTitle, CardSubtitle } from 'reactstrap';
+import {
+    Card,
+    CardText,
+    CardBlock,
+    CardTitle,
+    CardSubtitle
+}
+from 'reactstrap';
 import CardModal from './CardModal';
-
+import AuthorizedUsers from './AuthorizedUsers';
 
 const statusMessage = (completed) => {
     return completed ? (<span style={{color: "green"}}>Completed</span>) : (<span style={{color:"red"}}>In progress</span>);
@@ -12,19 +18,24 @@ const statusMessage = (completed) => {
 
 
 const StrapCard = (props) => {
-    const { card } = props;
-  return (
-      <Card>
+    const {
+        card,
+        currentBoard
+    } = props;
+    console.log("card is now from card component", card);
+    return (
+        <Card>
         <CardBlock>
-          <CardTitle>Card: {card.title}</CardTitle>
+          <CardTitle>Entry: {new Date(card.createdAt).toDateString()}</CardTitle>
           <CardSubtitle>{statusMessage(card.completed)}</CardSubtitle>
-          <CardText>{card.description}</CardText>
-          <CardModal buttonLabel="Open" {...card}/>
+          <CardModal buttonLabel="Open" {...card}>
+            <AuthorizedUsers members={card.Cardmembers} requestRemoval={() => console.log("not yet wired up")}/>
+          </CardModal>
+        </CardBlock>
+        <CardBlock>
         </CardBlock>
       </Card>
-  );
+    );
 };
 
 export default StrapCard;
-
-

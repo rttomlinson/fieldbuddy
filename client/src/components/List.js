@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { Card, CardText, CardBlock,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardBlock,
+  CardTitle, Button } from 'reactstrap';
 import NewCardForm from './NewCardForm';
 import CardCard from './Card';
 
 
-function makeCards(cards) {
+function makeCards(cards, currentBoard) {
     return cards.map(card => {
         return (
-            <CardCard key={card.id} card={card} />
+            <CardCard key={card.id} card={card} currentBoard={currentBoard}/>
         );
     });
 }
@@ -20,18 +20,16 @@ function makeCards(cards) {
 
 
 const List = (props) => {
-    const { Cards, boardId, name, children, id } = props;
+    const { style, Cards, boardId, name, children, id, currentBoard } = props;
   return (
-      <Card>
+      <Card style={style}>
         <CardBlock>
-          <CardTitle>List: {name}</CardTitle>
-          <CardSubtitle>List subtitle</CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <NewCardForm buttonLabel="Add new card" listId={id}/>
+          <CardTitle>Animal: {name}</CardTitle>
+          <NewCardForm buttonLabel="Add new entry" listId={id}/>
           <Button onClick={() => {console.log("List deletion not yet implemented")}}>Delete this list</Button>
         </CardBlock>
         <CardBlock>
-            {makeCards(Cards)}
+            {makeCards(Cards, currentBoard)}
         </CardBlock>
       </Card>
   );

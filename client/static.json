@@ -2,10 +2,10 @@
     "root": "build/",
     "proxies": {
         "/api/": {
-            "origin": "https://calm-atoll-30465.herokuapp.com/api"
+            "origin": "https://fieldbuddy-backend.herokuapp.com/api"
         },
         "/auth/": {
-            "origin": "https://calm-atoll-30465.herokuapp.com/auth"
+            "origin": "https://fieldbuddy-backend.herokuapp.com/auth"
 
         }
     },

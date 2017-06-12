@@ -27,7 +27,7 @@ import DashboardContainer from './DashboardContainer';
 const makeBoards = (boards) => {
     return boards.map((board) => {
         return (
-            <Col key={board.id} xs={12} sm={6} md={6}> 
+            <Col key={board.id} xs={12} sm={6} md={4}> 
                 <Board {...board}/>
             </Col>
         );
@@ -64,17 +64,6 @@ function mapStateToProps(state, ownProps) {
         boards: state.boards.data
     };
 }
-
-// function mapDispatchToProps(dispatch, ownProps) {
-//     return {
-//         requestRemoveBoardmember: (boardId, memberId) => {
-//             dispatch(requestRemoveBoardmember(boardId, memberId));
-//         },
-//         requestAddBoardmember: (boardId, memberId) => {
-//             dispatch(requestAddBoardmember(boardId, memberId));
-//         }
-//     };
-// }
 
 const WrappedBoardsContainer = () => {
     return (

@@ -64,9 +64,9 @@ class NewBoardForm extends React.Component {
             <div>
         <Button color="danger" onClick={this.toggle}>{buttonLabel}</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Add new card</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Add new entry</ModalHeader>
           <ModalBody>
-            <FormWrapper buttonText={"Add card"} onSubmit={requestCardCreation} id="new-card" inputFields={createInputFields(listId)} onClick={this.toggle}/>
+            <FormWrapper buttonText={"Add entry"} onSubmit={requestCardCreation} id="new-card" inputFields={createInputFields(listId)} onClick={this.toggle}/>
           </ModalBody>
         </Modal>
       </div>

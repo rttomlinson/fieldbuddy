@@ -91,7 +91,10 @@ wagner.invoke(require('./services/auth'), {
 //Routers
 //----------------------------
 
-app.use('/api', wagner.invoke(require("./routes/api")));
+app.use('/api/boards', wagner.invoke(require("./routes/boards")));
+app.use('/api/lists', wagner.invoke(require("./routes/lists")));
+app.use('/api/cards', wagner.invoke(require("./routes/cards")));
+app.use('/api/users', wagner.invoke(require("./routes/users")));
 
 
 app.get('/', (req, res, next) => {
